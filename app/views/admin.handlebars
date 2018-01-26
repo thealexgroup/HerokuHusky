@@ -1,0 +1,147 @@
+
+<!--this will be the admin landing page!-->
+<!--requirements for this page: student table (searchable/delete student), the add student button (takes you to form)-->
+ 
+<!--#each does not work in tables....-->
+
+<div class="bg-1">
+
+
+<button type="button" class="tableBtn btn btn-outline-secondary btn-lg"><a href="/admin_add"><span class="glyphicon glyphicon-plus"></span> Add Student</a></button>
+<button type="button" class="tableBtn btn btn-outline-secondary btn-lg"><a href="/admin_delete"><span class="glyphicon glyphicon-minus"></span> Delete Student</a></button>
+<button type="button" class="tableBtn btn btn-outline-secondary btn-lg"><a href="/admin" ><span class="glyphicon glyphicon-heart-empty"></span> Student Dashboard</a></button>
+
+
+
+
+<div id="tableDiv" class="container-fluid bg-2 col-md-6 table panel panel-default text-center">
+ 	<table id="myTable" class="tablesorter table table-hover table-bordered table-striped table-responsive">
+    	<thead> 
+    		<tr>
+    			<th data-sortable= "true">Student Name</th>
+				<th data-sortable= "true">Student Email</th>
+				<th data-sortable= "true">Student Hour</th>
+				<th data-sortable= "true">Student Teacher Name</th>
+				<th data-sortable= "true">Initial Parent</th>
+				<th data-sortable= "true">First Mate</th>
+				<th data-sortable= "true">First Offspring</th>
+				<th data-sortable= "true">First Genotype</th>
+				<th data-sortable= "true">First Husky Image</th>
+				<th data-sortable= "true">First Created At</th>
+				<th data-sortable= "true">Second Mate</th>
+				<th data-sortable= "true">Second Offspring</th>
+				<th data-sortable= "true">Second Genotype</th>
+				<th data-sortable= "true">Second Husky Image</th>
+				<th data-sortable= "true">Second Created At</th>
+				<th data-sortable= "true">Third Mate</th>
+				<th data-sortable= "true">Third Offspring</th>
+				<th data-sortable= "true">Third Genotype</th>
+				<th data-sortable= "true">Third Husky Image</th>
+				<th data-sortable= "true">Third Created At</th>
+				<th data-sortable= "true">Fourth Mate</th>
+				<th data-sortable= "true">Fourth Offspring</th>
+				<th data-sortable= "true">Fourth Genotype</th>
+				<th data-sortable= "true">Fourth Husky Image</th>
+				<th data-sortable= "true">Fourth Created At</th>
+				<th data-sortable= "true">Fifth Mate</th>
+				<th data-sortable= "true">Fifth Offspring</th>
+				<th data-sortable= "true">Fifth Genotype</th>
+				<th data-sortable= "true">Fifth Husky Image</th>
+				<th data-sortable= "true">Fifth Created At</th>
+				<th data-sortable= "true">Sixth Mate</th>
+				<th data-sortable= "true">Sixth Offspring</th>
+				<th data-sortable= "true">Sixth Genotype</th>
+				<th data-sortable= "true">Sixth Husky Image</th>
+				<th data-sortable= "true">Sixth Created At</th>
+				<th data-sortable= "true">Seventh Mate</th>
+				<th data-sortable= "true">Seventh Offspring</th>
+				<th data-sortable= "true">Seventh Genotype</th>
+				<th data-sortable= "true">Seventh Husky Image</th>
+				<th data-sortable= "true">Seventh Created At</th>
+				<th data-sortable= "true">Eighth Mate</th>
+				<th data-sortable= "true">Eighth Offspring</th>
+				<th data-sortable= "true">Eighth Genotype</th>
+				<th data-sortable= "true">Eighth HuskyImage</th>
+				<th data-sortable= "true">Eighth Created At</th>
+			</tr>
+    	</thead> 
+
+	    <tbody> 
+	        {{#Students}} <!--needs to be title of all the info object (our students table?)-->
+	        <tr> 
+				<td>{{student_Name}}</td>
+				<td>{{student_Email}}</td>
+				<td>{{student_Hour}}</td>
+				<td>{{student_TeacherName}}</td>
+				<td>{{initial_Parent}}</td>
+				<td>{{first_Mate}}</td>
+				<td>{{first_Offspring}}</td>
+				<td>{{first_Genotype}}</td>
+				<td>{{first_HuskyImage}}</td>
+				<td>{{first_createdAt}}</td>
+				<td>{{second_Mate}}</td>
+				<td>{{second_Offspring}}</td>
+				<td>{{second_Genotype}}</td>
+				<td>{{second_HuskyImage}}</td>
+				<td>{{second_createdAt}}</td>
+				<td>{{third_Mate}}</td>
+				<td>{{third_Offspring}}</td>
+				<td>{{third_Genotype}}</td>
+				<td>{{third_HuskyImage}}</td>
+				<td>{{third_createdAt}}</td>
+				<td>{{fourth_Mate}}</td>
+				<td>{{fourth_Offspring}}</td>
+				<td>{{fourth_Genotype}}</td>
+				<td>{{fourth_HuskyImage}}</td>
+				<td>{{fourth_createdAt}}</td>
+				<td>{{fifth_Mate}}</td>
+				<td>{{fifth_Offspring}}</td>
+				<td>{{fifth_Genotype}}</td>
+				<td>{{fifth_HuskyImage}}</td>
+				<td>{{fifth_createdAt}}</td>
+				<td>{{sixth_Mate}}</td>
+				<td>{{sixth_Offspring}}</td>
+				<td>{{sixth_Genotype}}</td>
+				<td>{{sixth_HuskyImage}}</td>
+				<td>{{sixth_createdAt}}</td>
+				<td>{{seventh_Mate}}</td>
+				<td>{{seventh_Offspring}}</td>
+				<td>{{seventh_Genotype}}</td>
+				<td>{{seventh_HuskyImage}}</td>
+				<td>{{seventh_createdAt}}</td>
+				<td>{{eighth_Mate}}</td>
+				<td>{{eighth_Offspring}}</td>
+				<td>{{eighth_Genotype}}</td>
+				<td>{{eighth_HuskyImage}}</td>
+				<td>{{eighth_createdAt}}</td>
+	        </tr> 
+	        {{/Students}} 
+	    </tbody> 
+	</table> 
+</div>
+
+<script>
+    $(document).ready(function() { 
+        $("#myTable").tablesorter(); 
+    	}
+	); 
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

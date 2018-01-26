@@ -1,0 +1,70 @@
+<h1>Add Students Here</h1>
+
+<div>
+
+
+<a href="/admin_add" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-plus"></span> Add Student</a>
+<a href="/admin_delete" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-plus"></span> Delete Student</a>
+<a href="/admin" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-plus"></span> Student Dashboard</a>
+
+
+</div>
+
+<br><br>
+
+<div class="row" align="center">
+      <div class="col-lg-12">
+          <div class="panel panel-default">
+
+            <div class="panel-heading">
+              <h3 class="panel-title"><strong></strong></h3>
+            </div>
+
+<div class="form-group row">
+            <div class="panel-body">
+                <div class="col-xs-3"></div>
+
+                <div class="col-xs-6">
+                      <form name ="admin_add" class="create-update-form" action="/admin_add" method="POST">
+
+
+                        <div class="form-group">
+                          <label for="un">Student ID</label>
+                          <input class="form-control" type="text" id="student_Id" name="student_Id" placeholder="Student ID Here" value="{{student_Id}}">
+                        </div>
+
+                        <div class="form-group">
+                          <label for="un">Student Email</label>
+                          <input class="form-control" type="text" id="student_Email" name="student_Email" placeholder="Student Email Here" value="{{student_Email}}">
+                        </div>
+
+                        <div class="form-group">
+                          <label for="un">Student Name</label>
+                          <input class="form-control" type="text" id="student_Name" name="student_Name" placeholder="First Name Last Name Here" value="{{student_Name}}">
+                        </div>
+
+                        <div class="form-group">
+                          <label for="student_Hour">Student Class Hour</label>
+                          <input class="form-control" type="text" id="un" name="student_Hour" placeholder="Student Class Hour Here" value="{{student_Hour}}">
+                        </div>
+
+                         <div class="form-group">
+                          <label for="un">Teacher's Name</label>
+
+                          <input  class="form-control"type="text" id="student_TeacherName" name="student_TeacherName" placeholder="Teacher's Name Here" value="{{student_TeacherName}}">
+                        </div>
+
+
+                        <button type="submit">Add Student</button>
+
+                      </form>
+                      </div>
+
+<div class="col-xs-3"></div>
+                      <div class="col-xs-3"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+

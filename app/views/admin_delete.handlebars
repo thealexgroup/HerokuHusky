@@ -1,0 +1,50 @@
+
+<br><br><br><br>
+        
+<h1>Delete Students Here</h1>
+
+<div>
+
+<a href="/admin_add" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-plus"></span> Add Student</a>
+<a href="/admin_delete" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-minus"></span> Delete Student</a>
+<a href="/admin" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-plus"></span> Student Dashboard</a>
+<a href="/login" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-plus"></span> Logout</a>
+
+</div>
+
+<div class="row" align="center">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+
+      <div class="panel-heading">
+        <h3 class="panel-title"><strong></strong></h3>
+      </div>
+
+
+<div class="form-group row">
+  <div class="panel-body">
+    <div class="col-xs-3"></div>
+
+      <div class="col-xs-6">
+        <form name="admin_delete" class="create-update-form" action="/admin_delete" method="DELETE">
+
+                  
+          <div class="form-group">
+            <label for="un">Student Email</label>
+              <input class="form-control" type="text" id="un" name="student_Email" value="{{student_Email}}">
+          </div>
+
+
+          <button type="submit">Delete Student</button>
+
+        </form>
+      </div>
+
+
+      <div class="col-xs-3"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+

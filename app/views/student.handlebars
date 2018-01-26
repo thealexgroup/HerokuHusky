@@ -1,0 +1,49 @@
+
+<div class="bg-2 row" id="familyTree" class="bg-2">
+    <form id="student_form" name="student_form" method="GET" action="">
+
+    <div class="col-xs-6" style="text-align:center">
+        <label for="initial_Parent" >Enter the ID of your Husky</label><br>
+        <input id="initial_Parent" class="text-dark"name="initial_Parent" type="number" min="1" max="162" maxlength="3" required/><br>
+        <div id="holdfirst"></div>        
+    </div>
+
+    <div class="col-xs-6" style="text-align:center">    
+        <label for="first_Mate" >Enter the ID of your Husky Mate</label><br>
+        <input id="first_Mate" class="text-dark" name="first_Mate" type="number" min="1" max="162" maxlength="3" required/><br>
+        <div id="holdsecond"></div>        
+     </div>        
+
+    <div class="col-xs-12" style="text-align:center">    
+        <div id="firstpuppy"></div>        
+     </div>        
+
+    <div class="col-xs-12" style="text-align:center">         
+        <input class="btn" id="submit" type="submit" value="Submit" style="display: inline;"/>
+    </div>
+
+    </form>
+</div>
+
+<script type="text/javascript" src="../assets/js/app.js"></script>
+
+ <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">We have a HUSKY problem...</h4>
+        </div>
+        <div class="modal-body">
+          <p>Looks like you are trying to mate two males or two females, you better fix that!</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
