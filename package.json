@@ -4,18 +4,19 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sadams51/HuskyLove.git"
+    "url": "git+https://github.com/thealexgroup/HerokuHusky.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sadams51/HuskyLove/issues"
+    "url": "https://github.com/thealexgroup/HerokuHusky.git"
   },
-  "homepage": "https://github.com/sadams51/HuskyLove#readme",
+  "homepage": "https://github.com/thealexgroup/HerokuHusky.git#readme",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",

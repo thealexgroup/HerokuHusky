@@ -1,7 +1,8 @@
 use husky_db;
 
 CREATE TABLE students (
-	student_Id VARCHAR(255) PRIMARY KEY NOT NULL,
+	id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	student_Id VARCHAR(255) NOT NULL,
 	student_Email VARCHAR(255) NOT NULL,
 	student_Name VARCHAR(255) NOT NULL,
 	student_Hour INT(1) NOT NULL,
