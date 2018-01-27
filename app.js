@@ -79,7 +79,7 @@ var models = require("./app/models");
 var authRoute = require('./app/routes/auth.js')(app, passport);
 
 //load passport strategies 
-require('./app/config/passport/passport.js')(passport, models.Students); //TSA maybe change to caps!
+require('./app/config/passport/passport.js')(passport, models.students); //TSA maybe change to caps!
 
 //Sync Database
 //importing the models, then calling the sequelize sync function

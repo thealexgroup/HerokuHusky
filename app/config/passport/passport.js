@@ -62,7 +62,6 @@ module.exports = function(passport, students) {
 	passport.serializeUser(function(user, done) {
 
 		done(null, user.id);
-		console.lof(req.session.passport.user);
 	});
 
 	//deserialize user 

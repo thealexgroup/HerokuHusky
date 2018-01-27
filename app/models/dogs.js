@@ -2,7 +2,7 @@
 //model definition 
 module.exports = function(sequelize, DataTypes) {
 
-  var Dogs = sequelize.define("Dogs", {
+  var Dogs = sequelize.define("dogs", {
  
     id: {type: DataTypes.INTEGER, allowNull: false, primaryKey: true},
  
@@ -64,7 +64,8 @@ module.exports = function(sequelize, DataTypes) {
     genoType: {type: DataTypes.STRING,validate: {len: [8, 8], is: ["^[a-z]+$"]}},
     huskyImage: {type: DataTypes.STRING}, 
 
-  },{
+  },
+  {
         timestamps: false
   });
   return Dogs;

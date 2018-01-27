@@ -17,7 +17,7 @@ module.exports = function(app, passport) {
 
   //student get and post routes
   app.get("/student/get/:id", function(req, res) {
-    db.Dogs.findOne({
+    db.dogs.findOne({
       where:  {
         id: req.params.id
       }
@@ -29,7 +29,7 @@ module.exports = function(app, passport) {
 //student get and post routes
 
   app.get("/student/puppy1/:geno", function(req, res) {
-    db.Dogs.findOne({
+    db.dogs.findOne({
       where:  Sequelize.where(
         Sequelize.cast(Sequelize.col('genoType'), 'BINARY'), {$like: req.params.geno})
     }).then(function(results) {
@@ -39,7 +39,7 @@ module.exports = function(app, passport) {
 
   app.put("/student/update", function(req, res) {
 
-    db.Students.update({
+    db.students.update({
       initial_Parent: req.body.initial_Parent,
       first_Mate: req.body.first_Mate,
       first_Offspring: req.body.first_Offspring,
@@ -58,7 +58,7 @@ module.exports = function(app, passport) {
   // cms route loads cms.html
   app.get("/admin", function(req, res) {
     // res.sendFile(path.join(__dirname, "../public/admin.html"));
-    db.Students.findAll({
+    db.students.findAll({
 
     }).then(function(result) {
       // response.json(result);
@@ -74,7 +74,7 @@ module.exports = function(app, passport) {
   // route loads the add students page, where teachers will enter a new student into the student table
   app.post("/admin_add", function(req, res) {
 
-    db.Students.create({
+    db.students.create({
       student_Id: req.body.student_Id,
       student_Email: req.body.student_Email,
       student_Name: req.body.student_Name,
@@ -102,7 +102,7 @@ module.exports = function(app, passport) {
 
   app.post("/admin_delete/:student_Email", function(req, res) {
   
-    db.Students.destroy({
+    db.students.destroy({
       where: {
         student_Email: req.params.student_Email
       }
