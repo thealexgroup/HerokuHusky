@@ -1,6 +1,6 @@
 use husky_db;
 
-CREATE TABLE Dogs (
+CREATE TABLE dogs (
     id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY, 
     eyeColorOne VARCHAR(1) NOT NULL,
     eyeColorTwo VARCHAR(1) NOT NULL,
