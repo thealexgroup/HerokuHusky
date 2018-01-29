@@ -1,70 +1,66 @@
-<h1>Add Students Here</h1>
-
-<div>
 
 
-<a href="/admin_add" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-plus"></span> Add Student</a>
-<a href="/admin_delete" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-plus"></span> Delete Student</a>
-<a href="/admin" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-plus"></span> Student Dashboard</a>
+<br>
 
+                  
+                  <button type="button" class="tableBtn btn btn-outline-secondary btn-lg"><a href="/admin_delete"><span class="glyphicon glyphicon-minus"></span> Delete Student</a></button>
+                  <button type="button" class="tableBtn btn btn-outline-secondary btn-lg"><a href="/admin" ><span class="glyphicon glyphicon-heart-empty"></span> Student Dashboard</a></button>
 
-</div>
-
-<br><br>
-
-<div class="row" align="center">
-      <div class="col-lg-12">
-          <div class="panel panel-default">
-
-            <div class="panel-heading">
-              <h3 class="panel-title"><strong></strong></h3>
-            </div>
-
-<div class="form-group row">
-            <div class="panel-body">
+<h1>Add Student Here</h1>
+  <div class="form-group row">
+          <div class="panel-body">
                 <div class="col-xs-3"></div>
 
                 <div class="col-xs-6">
+
+<!-- Second Container -->
+  <div id="loginForm" class="container-fluid bg-2 text-center">
+
+<!---delete start-->
+    
                       <form name ="admin_add" class="create-update-form" action="/admin_add" method="POST">
 
 
                         <div class="form-group">
-                          <label for="un">Student ID</label>
+                      
                           <input class="form-control" type="text" id="student_Id" name="student_Id" placeholder="Student ID Here" value="{{student_Id}}">
                         </div>
 
                         <div class="form-group">
-                          <label for="un">Student Email</label>
+                     
                           <input class="form-control" type="text" id="student_Email" name="student_Email" placeholder="Student Email Here" value="{{student_Email}}">
                         </div>
 
                         <div class="form-group">
-                          <label for="un">Student Name</label>
+                       
                           <input class="form-control" type="text" id="student_Name" name="student_Name" placeholder="First Name Last Name Here" value="{{student_Name}}">
                         </div>
 
                         <div class="form-group">
-                          <label for="student_Hour">Student Class Hour</label>
+                          
                           <input class="form-control" type="text" id="un" name="student_Hour" placeholder="Student Class Hour Here" value="{{student_Hour}}">
                         </div>
 
                          <div class="form-group">
-                          <label for="un">Teacher's Name</label>
+                   
 
                           <input  class="form-control"type="text" id="student_TeacherName" name="student_TeacherName" placeholder="Teacher's Name Here" value="{{student_TeacherName}}">
                         </div>
 
 
-                        <button type="submit">Add Student</button>
+                        <button id="loginBtn" class="btn btn-default btn-sm">Add Student</button>
 
                       </form>
-                      </div>
+<!---delete end-->
 
-<div class="col-xs-3"></div>
-                      <div class="col-xs-3"></div>
-</div>
-</div>
-</div>
-</div>
-</div>
 
+
+
+  </div>
+
+
+    </div>
+
+    <div class="col-xs-3"></div>
+  </div>  
+</div>
