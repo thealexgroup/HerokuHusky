@@ -12,6 +12,10 @@ exports.admin_add = function(req, res) {
     res.render('admin_add');
 }
 
+exports.admin_delete = function(req, res) {
+    res.render('admin_delete');
+}
+
 exports.admin = function(req, res) {
      res.render('admin');
 }

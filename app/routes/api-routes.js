@@ -8,6 +8,7 @@ var path = require("path");
 var db = require("../models");
 var Sequelize = require('sequelize');
 var passport = require('passport');
+var bCrypt = require('bcrypt-nodejs');
 require('./auth.js');
 
 
@@ -74,8 +75,11 @@ module.exports = function(app, passport) {
   // route loads the add students page, where teachers will enter a new student into the student table
   app.post("/admin_add", function(req, res) {
 
+
+    var hashPass = bCrypt.hashSync(req.body.student_Id);
+
     db.students.create({
-      student_Id: req.body.student_Id,
+      student_Id: hashPass,
       student_Email: req.body.student_Email,
       student_Name: req.body.student_Name,
       student_Hour: req.body.student_Hour,
@@ -87,6 +91,7 @@ module.exports = function(app, passport) {
       console.log(err.errors[0].message);
       res.status(400); res.send("Sorry, we couldn't add that student.  Here's why: " + err.errors[0].message);
     });
+
   });
 
   // route loads the add students page, where teachers will enter a new student into the student table
@@ -95,19 +100,15 @@ module.exports = function(app, passport) {
     res.render("login");
   });
 
-  app.get("/admin_delete", function(req, res) {
-    res.render("admin_delete");
-  });
 
-
-  app.post("/admin_delete/:student_Email", function(req, res) {
+  app.post("/admin_delete/delete", function(req, res) {
   
     db.students.destroy({
       where: {
-        student_Email: req.params.student_Email
+        id: req.body.id
       }
     }).then(function(result) {
-      res.render("admin_delete", result);
+      res.redirect("/admin");
       // res.json(result);
     });
   });
