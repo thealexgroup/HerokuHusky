@@ -7,6 +7,8 @@ module.exports = function(app, passport) {
 
 	app.get('/admin_add', isLoggedIn, authController.admin_add);	
 
+	app.get('/admin_delete', isLoggedIn, authController.admin_delete);	
+
 	app.post('/login', passport.authenticate('student-login', {
 			successRedirect: '/student', 
 
