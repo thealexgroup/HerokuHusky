@@ -16,6 +16,8 @@ require('./auth.js');
 // // =============================================================
 module.exports = function(app, passport) {
 
+
+
   //student get and post routes
   app.get("/student/get/:id", function(req, res) {
     db.dogs.findOne({
@@ -45,8 +47,8 @@ module.exports = function(app, passport) {
       first_Mate: req.body.first_Mate,
       first_Offspring: req.body.first_Offspring,
       first_Genotype: req.body.first_Genotype,
-      first_HuskyImage: req.body.first_HuskyImage//,
-//      first_createdAt: req.body.first_createdAt
+      first_HuskyImage: req.body.first_HuskyImage,
+      first_createdAt: req.body.first_createdAt
     }, {
       where: {
         student_Email: newEmail
@@ -113,6 +115,16 @@ module.exports = function(app, passport) {
     });
   });
 
+
+app.get("/student/find/", function(req, res) {
+    db.students.findOne({
+      where:  {
+        student_Email: newEmail
+      }
+    }).then(function(results) {
+      res.json(results);
+    });
+  });
 
 
 };

@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+
 //holds the final genotype for puppy
 var newE = ""; 
 //holds initial_Parent info
@@ -7,8 +8,7 @@ var parent = {};
 //holds first_Mate info
 var mate1 = {};
 
-//var studentInfo = require("../../../routes/auth.js");
-//var userInfo = studentInfo.userInfo;
+//console.log(req.user.id);
 
 $(document).on("submit", function(event) {
 
@@ -20,12 +20,21 @@ $(document).on("submit", function(event) {
 	    checkValues(iniParent, fMate);
 });
 
+
+
 function checkValues(iniParent, fMate) {
 	if ((iniParent > 81 && fMate > 81) || (iniParent < 82 && fMate < 82)) {
 		$("#myModal").modal();
 	} else {
 		removeSubmit(iniParent, fMate);
+		getStudent();
 	}
+}
+
+function getStudent() {
+	$.get("/student/find/", function(newdata) {
+		console.log(" *************** HEY  ***********************" + newdata);
+	})
 }
 
 function removeSubmit(iniParent, fMate) {
@@ -222,15 +231,16 @@ function pickAllele5() {
 
 function searchForPuppy() {
 	$.get("/student/puppy1/" + newE, function(data) {
-		var date = new Date();
-		console.log(date);
+
+  	var date = new Date();
+
 		var updateData = {
 		initial_Parent: parent.id,
 		first_Mate: mate1.id,
       	first_Offspring: data.id,
       	first_Genotype: data.genoType,
-      	first_HuskyImage: data.huskyImage //,
-//      	first_createdAt: req.body.first_createdAt
+      	first_HuskyImage: data.huskyImage,
+      	first_createdAt: date
 		}
 		$("#firstpuppy").html("<br>Your FIRST puppy: <br><img src=assets/img/" + data.huskyImage + ">");
 		updateStudent(updateData);
