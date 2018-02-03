@@ -7,6 +7,17 @@ var newE = "";
 var parent = {};
 //holds first_Mate info
 var mate1 = {};
+//hold student info
+var studentData = {};
+
+function getStudent() {
+	$.get("/student/find/", function(newdata) {
+//		studentData += newdata;
+		console.log(newdata.first_createdAt);
+	})
+}
+
+getStudent();
 
 //console.log(req.user.id);
 
@@ -21,21 +32,15 @@ $(document).on("submit", function(event) {
 });
 
 
-
 function checkValues(iniParent, fMate) {
 	if ((iniParent > 81 && fMate > 81) || (iniParent < 82 && fMate < 82)) {
 		$("#myModal").modal();
 	} else {
 		removeSubmit(iniParent, fMate);
-		getStudent();
 	}
 }
 
-function getStudent() {
-	$.get("/student/find/", function(newdata) {
-		console.log(" *************** HEY  ***********************" + newdata);
-	})
-}
+
 
 function removeSubmit(iniParent, fMate) {
 	$("#submit").css("display", "none");
@@ -232,7 +237,29 @@ function pickAllele5() {
 function searchForPuppy() {
 	$.get("/student/puppy1/" + newE, function(data) {
 
-  	var date = new Date();
+		var timestamp = "";
+
+		  	var d = new Date();
+
+		  	var year = d.getFullYear();
+		  	
+		    var month = (d.getMonth() + 1);
+		  	if (month < 10 ) { month = ("0" + month);}
+		    
+		    var day = d.getDate();
+		    if (day < 10 ) {day = ("0" + day);}
+		  	
+		    var hour = d.getHours();
+		    if (hour < 10 ) {hour = ("0" + hour);}
+		  	
+		    var minute = d.getMinutes();
+		    if (minute < 10 ) {minute = ("0" + minute);}
+		  	
+		    var second = d.getSeconds();
+		    if (second < 10 ) {second = ("0" + second);}
+
+		    timestamp = (year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second);
+
 
 		var updateData = {
 		initial_Parent: parent.id,
@@ -240,7 +267,7 @@ function searchForPuppy() {
       	first_Offspring: data.id,
       	first_Genotype: data.genoType,
       	first_HuskyImage: data.huskyImage,
-      	first_createdAt: date
+      	first_createdAt: timestamp
 		}
 		$("#firstpuppy").html("<br>Your FIRST puppy: <br><img src=assets/img/" + data.huskyImage + ">");
 		updateStudent(updateData);
