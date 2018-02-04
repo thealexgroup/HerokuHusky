@@ -9,17 +9,64 @@ var parent = {};
 var mate1 = {};
 //hold student info
 var studentData = {};
+//current time on login
+
+function getCurrentTime() {
+
+		  	var newD = new Date();
+
+		  	var year = newD.getFullYear();
+		  	
+		    var month = (newD.getMonth() + 1);
+		  	if (month < 10 ) { month = ("0" + month);}
+		    
+		    var day = newD.getDate();
+		    if (day < 10 ) {day = ("0" + day);}
+		  	
+		    var hour = (newD.getHours() + 6);
+		    if (hour < 10 ) {hour = ("0" + hour);}
+		  	
+		    var minute = newD.getMinutes();
+		    if (minute < 10 ) {minute = ("0" + minute);}
+		  	
+		    var second = newD.getSeconds();
+		    if (second < 10 ) {second = ("0" + second);}
+
+		    currentTime = (year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second);
+		    console.log(currentTime);
+		    getStudent(currentTime);
+
+}
+
+getCurrentTime();
+
 
 function getStudent() {
 	$.get("/student/find/", function(newdata) {
+		var date1 = newdata.first_createdAt.slice(0, 19).replace('T', ' ');
 //		studentData += newdata;
-		console.log(newdata.first_createdAt);
+		console.log(date1);
+		getTimeDiff(currentTime, date1);
 	})
 }
 
-getStudent();
+function getTimeDiff(date1, currentTime) {
+        old_date = date1;
+        new_date = currentTime;
 
-//console.log(req.user.id);
+        old_date_obj = new Date(Date.parse(old_date, "dd/mm/yyyy HH:mm:ss"));
+        console.log("DATE 1 " + old_date_obj);
+        new_date_obj = new Date(Date.parse(new_date, "dd/mm/yyyy HH:mm:ss"));
+        console.log("DATE 2 " + new_date_obj);        
+
+        var utc1 = Date.UTC(new_date_obj.getFullYear(), new_date_obj.getMonth(), new_date_obj.getDate(), new_date_obj.getHours());
+        console.log("UTC1 " + utc1);
+        var utc2 = Date.UTC(old_date_obj.getFullYear(), old_date_obj.getMonth(), old_date_obj.getDate(), old_date_obj.getHours());
+        console.log("UTC2 " + utc2);        
+        console.log(Math.floor((utc2 - utc1) / (1000 * 60 * 60)));
+}
+
+
 
 $(document).on("submit", function(event) {
 
