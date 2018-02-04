@@ -1,6 +1,6 @@
   body {
       font-family: 'Raleway', sans-serif;
-      line-height: 1.8;
+      line-height: 1.5;
      /* color: #f5f6f7;*/
      color: #575b63;
   }
@@ -21,7 +21,7 @@
 
   h3 {
     font-family: 'Montserrat', sans-serif;
-    font: 40px;
+    font-size: 20px;
     letter-spacing: 2px;
   }
 
@@ -96,12 +96,12 @@
       color: #fff;
   }
   .container-fluid {
-      padding-top: 70px;
-      padding-bottom: 70px;
+      padding-top: 10px;
+      padding-bottom: 10px;
   }
   .navbar {
-      padding-top: 15px;
-      padding-bottom: 15px;
+      padding-top: 10px;
+      padding-bottom: 10px;
       border: 0;
       border-radius: 0;
       margin-bottom: 0;
@@ -166,5 +166,22 @@ img {
 
 }
 
+
+/* smaller viewport */
+
+@media screen and (max-width: 768px) {
+
+  p {
+    font-size: 14px;
+    margin-bottom: 15px;
+    }
+
+  h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+  }
+
+}
 
 
