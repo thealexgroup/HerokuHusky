@@ -1,15 +1,19 @@
 $(document).ready(function() {
 
 
+$( "#familyTree1a" ).hide();
+$( "#familyTree1b" ).hide();
+
 //holds the final genotype for puppy
 var newE = ""; 
 //holds initial_Parent info
 var parent = {};
 //holds first_Mate info
 var mate1 = {};
-//hold student info
-var studentData = {};
-//current time on login
+//hold studentinfo
+var studentInfo = {};
+//hold first time diff
+var totalTimeDiff1
 
 function getCurrentTime() {
 
@@ -23,7 +27,7 @@ function getCurrentTime() {
 		    var day = newD.getDate();
 		    if (day < 10 ) {day = ("0" + day);}
 		  	
-		    var hour = (newD.getHours() + 6);
+		    var hour = (newD.getHours());
 		    if (hour < 10 ) {hour = ("0" + hour);}
 		  	
 		    var minute = newD.getMinutes();
@@ -33,7 +37,6 @@ function getCurrentTime() {
 		    if (second < 10 ) {second = ("0" + second);}
 
 		    currentTime = (year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second);
-		    console.log(currentTime);
 		    getStudent(currentTime);
 
 }
@@ -43,10 +46,16 @@ getCurrentTime();
 
 function getStudent() {
 	$.get("/student/find/", function(newdata) {
+		studentInfo = newdata;
+		console.log(studentInfo);
+
+		if (studentInfo.first_createdAt) {
 		var date1 = newdata.first_createdAt.slice(0, 19).replace('T', ' ');
 //		studentData += newdata;
 		console.log(date1);
 		getTimeDiff(currentTime, date1);
+	} else 
+	displayDivs();
 	})
 }
 
@@ -63,10 +72,22 @@ function getTimeDiff(date1, currentTime) {
         console.log("UTC1 " + utc1);
         var utc2 = Date.UTC(old_date_obj.getFullYear(), old_date_obj.getMonth(), old_date_obj.getDate(), old_date_obj.getHours());
         console.log("UTC2 " + utc2);        
-        console.log(Math.floor((utc2 - utc1) / (1000 * 60 * 60)));
+        totalTimeDiff1 = (Math.floor((utc2 - utc1) / (1000 * 60 * 60) + 6));
+        console.log(totalTimeDiff1);
+        displayDivs();
 }
 
 
+function displayDivs() {
+	if (!studentInfo.first_createdAt) {
+			$("#familyTree1a").show();
+		}
+	if (totalTimeDiff1 > 0) {
+			$("#familyTree1b").show();
+			$("#holdfirst1a").html("<img src=assets/img/" + studentInfo.initial_Parent + ".jpg>");			
+			$("#holdsecond1a").html("<img src=assets/img/" + studentInfo.first_Mate + ".jpg>");		
+		}
+}
 
 $(document).on("submit", function(event) {
 
@@ -86,7 +107,6 @@ function checkValues(iniParent, fMate) {
 		removeSubmit(iniParent, fMate);
 	}
 }
-
 
 
 function removeSubmit(iniParent, fMate) {
