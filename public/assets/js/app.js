@@ -3,6 +3,8 @@ $(document).ready(function() {
 
 $( "#familyTree1a" ).hide();
 $( "#familyTree1b" ).hide();
+$( "#familyTree1c" ).hide();
+$( "#familyTree2a" ).hide();
 
 //holds the final genotype for puppy
 var newE = ""; 
@@ -82,14 +84,19 @@ function displayDivs() {
 	if (!studentInfo.first_createdAt) {
 			$("#familyTree1a").show();
 		}
-	if (totalTimeDiff1 > 0) {
+	if (studentInfo.first_createdAt && totalTimeDiff1 === 0) {
 			$("#familyTree1b").show();
-			$("#holdfirst1a").html("<img src=assets/img/" + studentInfo.initial_Parent + ".jpg>");			
-			$("#holdsecond1a").html("<img src=assets/img/" + studentInfo.first_Mate + ".jpg>");		
+			$("#holdfirst2a").html("<img src=assets/img/" + studentInfo.initial_Parent + ".jpg>");			
+			$("#holdsecond2a").html("<img src=assets/img/" + studentInfo.first_Mate + ".jpg>");		
 		}
+	if (studentInfo.first_createdAt && totalTimeDiff1 > 0) {
+			$("#familyTree1c").show();
+			$("#holdfirst1c").html("<img src=assets/img/" + studentInfo.initial_Parent + ".jpg>");			
+			$("#holdsecond1c").html("<img src=assets/img/" + studentInfo.first_Mate + ".jpg>");		
+		}		
 }
 
-$(document).on("submit", function(event) {
+$("#submit1").on("click", function(event) {
 
 	    event.preventDefault();
 	    var iniParent = $('input[name="initial_Parent"]').val();
@@ -110,7 +117,8 @@ function checkValues(iniParent, fMate) {
 
 
 function removeSubmit(iniParent, fMate) {
-	$("#submit").css("display", "none");
+	$("#submit1").css("display", "none");
+	$("#show1").css("display", "inline");
 	searchFirstDog(iniParent, fMate);
 }
 
