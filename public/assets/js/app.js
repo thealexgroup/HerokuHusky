@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-
+//these are the divs that hold the information on the student screen 
 $( "#familyTree1a" ).hide();
 $( "#familyTree1b" ).hide();
 $( "#familyTree1c" ).hide();
@@ -14,11 +14,11 @@ var parent = {};
 var mate1 = {};
 //hold studentinfo
 var studentInfo = {};
-//hold first time diff
-var totalTimeDiff1
 
+//get current time to use in all of the display pieces.
 function getCurrentTime() {
 
+			//get new date, parse it out in to the format I want
 		  	var newD = new Date();
 
 		  	var year = newD.getFullYear();
@@ -39,6 +39,7 @@ function getCurrentTime() {
 		    if (second < 10 ) {second = ("0" + second);}
 
 		    currentTime = (year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second);
+		    //get the student info, do time calculations
 		    getStudent(currentTime);
 
 }
@@ -46,24 +47,22 @@ function getCurrentTime() {
 getCurrentTime();
 
 
-function getStudent() {
+function getStudent(currentTime) {
 	$.get("/student/find/", function(newdata) {
 		studentInfo = newdata;
-		console.log(studentInfo);
-
 		if (studentInfo.first_createdAt) {
 		var date1 = newdata.first_createdAt.slice(0, 19).replace('T', ' ');
-//		studentData += newdata;
 		console.log(date1);
-		getTimeDiff(currentTime, date1);
+		getTimeDiff1(date1, currentTime);
 	} else 
-	displayDivs();
+	displayFirstDivs(currentTime);
 	})
 }
 
-function getTimeDiff(date1, currentTime) {
+function getTimeDiff1(date1, currentTime) {
         old_date = date1;
         new_date = currentTime;
+        console.log("New Date? " + new_date);
 
         old_date_obj = new Date(Date.parse(old_date, "dd/mm/yyyy HH:mm:ss"));
         console.log("DATE 1 " + old_date_obj);
@@ -73,27 +72,66 @@ function getTimeDiff(date1, currentTime) {
         var utc1 = Date.UTC(new_date_obj.getFullYear(), new_date_obj.getMonth(), new_date_obj.getDate(), new_date_obj.getHours());
         console.log("UTC1 " + utc1);
         var utc2 = Date.UTC(old_date_obj.getFullYear(), old_date_obj.getMonth(), old_date_obj.getDate(), old_date_obj.getHours());
-        console.log("UTC2 " + utc2);        
-        totalTimeDiff1 = (Math.floor((utc2 - utc1) / (1000 * 60 * 60) + 6));
-        console.log(totalTimeDiff1);
-        displayDivs();
+        console.log("UTC2 " + utc1);        
+        totalTimeDiff1 = (Math.floor((utc1 - utc2) / (1000 * 60 * 60)));
+        displayFirstDivs(currentTime, totalTimeDiff1);
 }
 
 
-function displayDivs() {
+function displayFirstDivs(currentTime, totalTimeDiff1) {
+	console.log("First time difference " + totalTimeDiff1)
 	if (!studentInfo.first_createdAt) {
 			$("#familyTree1a").show();
 		}
-	if (studentInfo.first_createdAt && totalTimeDiff1 === 0) {
+	if (studentInfo.first_createdAt && totalTimeDiff1 < 2) { //TSA CHANGE THIS TO 18 FOR LIVE
 			$("#familyTree1b").show();
-			$("#holdfirst2a").html("<img src=assets/img/" + studentInfo.initial_Parent + ".jpg>");			
-			$("#holdsecond2a").html("<img src=assets/img/" + studentInfo.first_Mate + ".jpg>");		
+			$("#holdfirst1b").html("<img src=assets/img/" + studentInfo.initial_Parent + ".jpg>");			
+			$("#holdsecond1b").html("<img src=assets/img/" + studentInfo.first_Mate + ".jpg>");		
 		}
-	if (studentInfo.first_createdAt && totalTimeDiff1 > 0) {
+	if (studentInfo.first_createdAt && totalTimeDiff1 > 1) { //TSA CHANGE THIS TO 17 FOR LIVE
 			$("#familyTree1c").show();
 			$("#holdfirst1c").html("<img src=assets/img/" + studentInfo.initial_Parent + ".jpg>");			
 			$("#holdsecond1c").html("<img src=assets/img/" + studentInfo.first_Mate + ".jpg>");		
 		}		
+		getTimeDiff2(currentTime, totalTimeDiff1);
+}
+
+function getTimeDiff2(currentTime, totalTimeDiff1) {
+		if (studentInfo.second_createdAt) {
+        old_date = studentInfo.second_createdAt.slice(0, 19).replace('T', ' ');
+    } else {
+    	old_date = currentTime;
+    }
+        new_date = currentTime;
+
+        old_date_obj = new Date(Date.parse(old_date, "dd/mm/yyyy HH:mm:ss"));
+//        console.log("DATE 1 " + old_date_obj);
+        new_date_obj = new Date(Date.parse(new_date, "dd/mm/yyyy HH:mm:ss"));
+//        console.log("DATE 2 " + new_date_obj);        
+
+        var utc1 = Date.UTC(new_date_obj.getFullYear(), new_date_obj.getMonth(), new_date_obj.getDate(), new_date_obj.getHours());
+//        console.log("UTC1 " + utc1);
+        var utc2 = Date.UTC(old_date_obj.getFullYear(), old_date_obj.getMonth(), old_date_obj.getDate(), old_date_obj.getHours());
+        totalTimeDiff2 = (Math.floor((utc1 - utc2) / (1000 * 60 * 60)));
+        displaySecondDivs(currentTime, totalTimeDiff1, totalTimeDiff2);
+}
+
+function displaySecondDivs(currentTime, totalTimeDiff1, totalTimeDiff2) {
+	if (!studentInfo.second_createdAt && totalTimeDiff1 > 1) { //TSA CHANGE THIS TO 17 FOR LIVE
+			$("#familyTree2a").show();
+			$("#holdfirst2a").html("<img src=assets/img/" + studentInfo.first_HuskyImage + ">");						
+		}
+	if (studentInfo.second_createdAt && totalTimeDiff2 < 2) {//TSA CHANGE THIS TO 18 FOR LIVE
+			$("#familyTree2b").show();
+			$("#holdfirst2b").html("<img src=assets/img/" + studentInfo.first_HuskyImage + ">");			
+			$("#holdsecond2b").html("<img src=assets/img/" + studentInfo.second_Mate + ".jpg>");		
+		}
+	if (studentInfo.second_createdAt && totalTimeDiff2 > 1) {//TSA CHANGE THIS TO 17 FOR LIVE
+			$("#familyTree2c").show();
+			$("#holdfirst2c").html("<img src=assets/img/" + studentInfo.first_HuskyImage + ".jpg>");			
+			$("#holdsecond2c").html("<img src=assets/img/" + studentInfo.second_Mate + ".jpg>");		
+		}		
+//		displaySecondDivs(currentTime);
 }
 
 $("#submit1").on("click", function(event) {

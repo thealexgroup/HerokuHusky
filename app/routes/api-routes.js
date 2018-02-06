@@ -40,23 +40,6 @@ module.exports = function(app, passport) {
     });
   });
 
-  app.put("/student/update", function(req, res) {
-
-    db.students.update({
-      initial_Parent: req.body.initial_Parent,
-      first_Mate: req.body.first_Mate,
-      first_Offspring: req.body.first_Offspring,
-      first_Genotype: req.body.first_Genotype,
-      first_HuskyImage: req.body.first_HuskyImage,
-      first_createdAt: req.body.first_createdAt
-    }, {
-      where: {
-        student_Email: newEmail
-      }
-    }).then(function(result) {
-      res.render("login", result);
-    });
-  });
 
   // cms route loads cms.html
   app.get("/admin", function(req, res) {
@@ -126,6 +109,41 @@ app.get("/student/find/", function(req, res) {
     });
   });
 
+  app.put("/student/update", function(req, res) {
+
+    db.students.update({
+      initial_Parent: req.body.initial_Parent,
+      first_Mate: req.body.first_Mate,
+      first_Offspring: req.body.first_Offspring,
+      first_Genotype: req.body.first_Genotype,
+      first_HuskyImage: req.body.first_HuskyImage,
+      first_createdAt: req.body.first_createdAt
+    }, {
+      where: {
+        student_Email: newEmail
+      }
+    }).then(function(result) {
+      res.render("login", result);
+    });
+  });
+
+  app.put("/student/update2", function(req, res) {
+
+    db.students.update({
+      initial_Parent: req.body.initial_Parent,
+      first_Mate: req.body.first_Mate,
+      first_Offspring: req.body.first_Offspring,
+      first_Genotype: req.body.first_Genotype,
+      first_HuskyImage: req.body.first_HuskyImage,
+      first_createdAt: req.body.first_createdAt
+    }, {
+      where: {
+        student_Email: newEmail
+      }
+    }).then(function(result) {
+      res.render("login", result);
+    });
+  });
 
 };
 
