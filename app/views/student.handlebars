@@ -1,4 +1,5 @@
 <br><br>
+
 <!--  ******************* Submit for first puppy ******************************* -->
 
 <div class="container bg-2 row" id="familyTree1a" class="bg-2">
@@ -33,14 +34,14 @@
 <div class="container bg-2 row" id="familyTree1b" class="bg-2">
 
     <div class="col-xs-6" style="text-align:center">
-        <div id="holdfirst2a"></div>        
+        <div id="holdfirst1b"></div>        
     </div>
 
     <div class="col-xs-6" style="text-align:center">    
-        <div id="holdsecond2a"></div>        
+        <div id="holdsecond1b"></div>        
      </div>        
 
-    <div class="col-xs-12" style="text-align:center; font-color: white; font-weight: 700; id="show1a">         
+    <div class="col-xs-12" style="text-align:center; font-color: white; font-weight: 700;" id="show1a">         
         Now you have to wait for your puppy...
     </div>
 
@@ -51,21 +52,54 @@
 <div class="container bg-2 row" id="familyTree1c" class="bg-2">
 
     <div class="col-xs-6" style="text-align:center">
+    Parent 1:<br>
         <div id="holdfirst1c"></div>        
     </div>
 
     <div class="col-xs-6" style="text-align:center">    
+    Parent 2:<br>
         <div id="holdsecond1c"></div>        
      </div>        
 
-    <div class="col-xs-12" style="text-align:center; font-color: white; font-weight: 700; id="show1c">         
+    <div class="col-xs-12" style="text-align:center; font-color: white; font-weight: 700;" id="show1c">         
         See your first puppy below ...
     </div>
 
 </div>
+<br><br>
 <!-- ******************** end display both parents but not puppy! ************************ -->
 
-<br><br>
+
+<!--  ******************* Submit for Second puppy ******************************* -->
+
+<div class="container bg-2 row" id="familyTree2a" class="bg-2">
+    <form id="student_form2" name="student_form" method="GET" action="">
+
+    <div class="col-xs-6" style="text-align:center; font-color: white;">
+        YOUR FIRST PUPPY<br>
+        and parent for next generation.
+        <div id="holdfirst2a"></div>        
+    </div>
+
+    <div class="col-xs-6" style="text-align:center">    
+        <label for="second_Mate" >Enter the ID of SECOND <br>Husky Mate</label><br>
+        <input id="second_Mate" class="text-dark" name="second_Mate" type="number" min="1" max="162" maxlength="3" required/><br>
+        <div id="holdsecond2a"></div>        
+     </div>        
+
+    <div class="col-xs-12" style="text-align:center; font-color: black;">         
+        <input class="btn" id="submit2" type="submit" value="Submit" style="display: inline;"/>
+    </div>
+
+    <div class="col-xs-12" style="text-align:center; display: none;" id="show2">         
+        <span style="font-color: white; font-weight: 700;">Now you have to wait for your puppy...</span>
+    </div>
+
+
+    </form>
+</div>
+<!--  ******************* end of Submit for first puppy ******************************* -->
+
 <script type="text/javascript" src="../assets/js/app.js"></script>
 
  <!-- Modal -->
