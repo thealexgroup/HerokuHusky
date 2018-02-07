@@ -1,26 +1,42 @@
 $(document).ready(function() {
 
-//these are the divs that hold the information on the student screen 
+/*
+    	These are the divs that hold the information on the student screen 
+		a holds the initial input for mate
+		b holds the wait message
+		c holds the see puppy message
+		Hide them all intially
+*/
+
 $( "#familyTree1a" ).hide();
 $( "#familyTree1b" ).hide();
 $( "#familyTree1c" ).hide();
 $( "#familyTree2a" ).hide();
+$( "#familyTree2b" ).hide();
+$( "#familyTree2c" ).hide();
+
 
 //holds the final genotype for puppy
 var newE = ""; 
+
 //holds initial_Parent info
 var parent = {};
+
 //holds first_Mate info
 var mate1 = {};
+
 //hold studentinfo
 var studentInfo = {};
 
-//get current time to use in all of the display pieces.
+//	get current time to use in all of the display pieces. this will determine what, if anything, will be 
+//  displayed for each puppy
+
 function getCurrentTime() {
 
-			//get new date, parse it out in to the format I want
+			//get new date
 		  	var newD = new Date();
 
+		  	//parse out the new date in the format I want
 		  	var year = newD.getFullYear();
 		  	
 		    var month = (newD.getMonth() + 1);
@@ -38,19 +54,22 @@ function getCurrentTime() {
 		    var second = newD.getSeconds();
 		    if (second < 10 ) {second = ("0" + second);}
 
+		    //write the current time and pass it along
 		    currentTime = (year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second);
 		    //get the student info, do time calculations
 		    getStudent(currentTime);
 
 }
 
+//invoke this function and when done, invoke getStudent function
 getCurrentTime();
 
 
+//get the entire student object from the database.  Probably not a great thing but put it in a global variable
 function getStudent(currentTime) {
 	$.get("/student/find/", function(newdata) {
 		studentInfo = newdata;
-		if (studentInfo.first_createdAt) {
+		if (studentInfo.first_createdAt) { 									
 		var date1 = newdata.first_createdAt.slice(0, 19).replace('T', ' ');
 		console.log(date1);
 		getTimeDiff1(date1, currentTime);
@@ -59,6 +78,8 @@ function getStudent(currentTime) {
 	})
 }
 
+//if I had to do this over again, I would write this to the database and not calculated it every time.
+//but I'll end up getting the time differential every time.
 function getTimeDiff1(date1, currentTime) {
         old_date = date1;
         new_date = currentTime;
@@ -73,7 +94,7 @@ function getTimeDiff1(date1, currentTime) {
         console.log("UTC1 " + utc1);
         var utc2 = Date.UTC(old_date_obj.getFullYear(), old_date_obj.getMonth(), old_date_obj.getDate(), old_date_obj.getHours());
         console.log("UTC2 " + utc1);        
-        totalTimeDiff1 = (Math.floor((utc1 - utc2) / (1000 * 60 * 60)));
+        totalTimeDiff1 = (Math.floor((utc1 - utc2) / (1000 * 60 * 60) + 8));
         displayFirstDivs(currentTime, totalTimeDiff1);
 }
 
@@ -134,6 +155,8 @@ function displaySecondDivs(currentTime, totalTimeDiff1, totalTimeDiff2) {
 //		displaySecondDivs(currentTime);
 }
 
+// get first parent and mate information
+
 $("#submit1").on("click", function(event) {
 
 	    event.preventDefault();
@@ -146,7 +169,9 @@ $("#submit1").on("click", function(event) {
 
 
 function checkValues(iniParent, fMate) {
-	if ((iniParent > 81 && fMate > 81) || (iniParent < 82 && fMate < 82)) {
+	if ((iniParent > 81 && fMate > 81) || (iniParent < 82 && fMate < 82)  ||  (!fMate) || (!iniParent) ||
+		 (iniParent > 162)  || (iniParent < 1)  || (fMate > 162)  || (fMate < 1)
+		) {
 		$("#myModal").modal();
 	} else {
 		removeSubmit(iniParent, fMate);
@@ -162,8 +187,8 @@ function removeSubmit(iniParent, fMate) {
 
 function searchFirstDog(iniParent, fMate) {
 	$.get("/student/get/" + iniParent, function(data1) {
-//		console.log(data1.huskyImage);
-		$("#holdfirst").html("<img src=assets/img/" + data1.huskyImage + ">");
+		console.log("Husky 1 " + data1.huskyImage);
+		$("#holdfirst1a").html("<img src=assets/img/" + data1.huskyImage + ">");
 		parent = data1;
 		searchSecondDog(iniParent, fMate, data1)
 	})
@@ -171,7 +196,8 @@ function searchFirstDog(iniParent, fMate) {
 
 function searchSecondDog(iniParent, fMate, data1) {
 	$.get("/student/get/" + fMate, function(data2) {
-		$("#holdsecond").html("<img src=assets/img/" + data2.huskyImage + ">");		
+		console.log("Husky 2 " + data2.huskyImage);		
+		$("#holdsecond1a").html("<img src=assets/img/" + data2.huskyImage + ">");		
 		mate1 = data2;
 		pickAllele1();
 	})
@@ -394,6 +420,35 @@ function updateStudent(updateData) {
       data: updateData
     })
   }
+
+// get first parent and mate information
+
+$("#submit2").on("click", function(event) {
+
+	    event.preventDefault();
+	    var first_Offspring = studentInfo.first_Offspring;
+//	    console.log(iniParent);
+	    var second_Mate =  $('input[name="second_Mate"]').val();
+//	    console.log(fMate);
+	    checkValues2(first_Offspring, second_Mate);
+});
+
+
+function checkValues2(first_Offspring, second_Mate) {
+	if ((first_Offspring > 81 && second_Mate > 81) || (first_Offspring < 82 && second_Mate < 82) || 
+		(!second_Mate) || (!first_Offspring) || (first_Offspring < 1)  || (first_Offspring > 162) || (second_Mate < 1)  || (second_Mate > 162)) {
+		$("#myModal").modal();
+	} else {
+		removeSubmit2(first_Offspring, second_Mate);
+	}
+}
+
+function removeSubmit2(first_Offspring, second_Mate) {
+	$("#submit2").css("display", "none");
+	$("#show2").css("display", "inline");
+//	searchFirstDog2(iniParent, fMate);
+}
+
 
 });
 
