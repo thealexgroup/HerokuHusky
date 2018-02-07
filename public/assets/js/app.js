@@ -18,12 +18,15 @@ $( "#familyTree2c" ).hide();
 
 //holds the final genotype for puppy
 var newE = ""; 
+var newE2 = ""; 
 
-//holds initial_Parent info
+//holds parent info
 var parent = {};
+var parent2 = {};
 
 //holds first_Mate info
 var mate1 = {};
+var mate2 = {};
 
 //hold studentinfo
 var studentInfo = {};
@@ -134,6 +137,7 @@ function getTimeDiff2(currentTime, totalTimeDiff1) {
 //        console.log("UTC1 " + utc1);
         var utc2 = Date.UTC(old_date_obj.getFullYear(), old_date_obj.getMonth(), old_date_obj.getDate(), old_date_obj.getHours());
         totalTimeDiff2 = (Math.floor((utc1 - utc2) / (1000 * 60 * 60)));
+        console.log("Second time difference " + totalTimeDiff2)
         displaySecondDivs(currentTime, totalTimeDiff1, totalTimeDiff2);
 }
 
@@ -446,9 +450,244 @@ function checkValues2(first_Offspring, second_Mate) {
 function removeSubmit2(first_Offspring, second_Mate) {
 	$("#submit2").css("display", "none");
 	$("#show2").css("display", "inline");
-//	searchFirstDog2(iniParent, fMate);
+	searchDog2a(first_Offspring, second_Mate);
 }
 
+
+function searchDog2a(first_Offspring, second_Mate) {
+	$.get("/student/get/" + first_Offspring, function(data2a) {
+//		$("#holdfirst1a").html("<img src=assets/img/" + data1.huskyImage + ">");
+		parent2 = data2a;
+		searchDog2b(first_Offspring, second_Mate, data2a)
+	})
+}
+
+function searchDog2b(first_Offspring, second_Mate, data2a) {
+	$.get("/student/get/" + second_Mate, function(data2b) {
+		console.log("Husky 2b " + data2b.huskyImage);		
+		$("#holdsecond2a").html("<img src=assets/img/" + data2b.huskyImage + ">");		
+		parent2 = data2a;
+		mate2 = data2a;
+		pickAllele1a();
+	})
+}
+
+//randomly choose between one or the other allele for eye color
+function pickAllele1a() {
+
+	var e1 = parent2.eyeColorOne;
+	var e2 = parent2.eyeColorTwo;
+	var e3 = mate2.eyeColorOne;
+	var e4 = mate2.eyeColorTwo;
+	var hold1 = "";
+	var hold2 = "";	
+
+	var choose1 = Math.random();
+	if (choose1 < 0.5) {
+		hold1 = e1;
+	} else {
+		hold1 = e2;
+	}
+//	console.log("one " + hold1);
+
+	var choose2 = Math.random();
+	if (choose2 < 0.5) {
+		hold2 = e3;
+	} else {
+		hold2 = e4;
+	}
+//	console.log("two " + hold2);	
+	if ((hold1.charAt(0) === hold1.charAt(0).toLowerCase()) && 
+		(hold2.charAt(0) === hold2.charAt(0).toUpperCase())) {
+		newE2 += (hold2 + hold1);
+	} else {
+		newE2 += (hold1 + hold2);		
+	}
+	pickAllele2a();
+};
+
+function pickAllele2a() {
+
+	var e1 = parent2.coatColorOne;
+	var e2 = parent2.coatColorTwo;
+	var e3 = mate2.coatColorOne;
+	var e4 = mate2.coatColorTwo;
+	var hold1 = "";
+	var hold2 = "";	
+
+	var choose1 = Math.random();
+	if (choose1 < 0.5) {
+		hold1 = e1;
+	} else {
+		hold1 = e2;
+	}
+//	console.log("one " + hold1);
+
+	var choose2 = Math.random();
+	if (choose2 < 0.5) {
+		hold2 = e3;
+	} else {
+		hold2 = e4;
+	}
+//	console.log("two " + hold2);	
+	if ((hold1.charAt(0) === "W") && 
+		(hold2.charAt(0) === "G")) {
+		newE2 += (hold2 + hold1);
+	} else {
+		newE2 += (hold1 + hold2);		
+	}
+//	console.log("2 " + newE);
+	pickAllele3a();
+};
+
+function pickAllele3a() {
+
+	var e1 = parent2.tailLengthOne;
+	var e2 = parent2.tailLengthTwo;
+	var e3 = mate2.tailLengthOne;
+	var e4 = mate2.tailLengthTwo;
+	var hold1 = "";
+	var hold2 = "";	
+
+	var choose1 = Math.random();
+	if (choose1 < 0.5) {
+		hold1 = e1;
+	} else {
+		hold1 = e2;
+	}
+//	console.log("one " + hold1);
+
+	var choose2 = Math.random();
+	if (choose2 < 0.5) {
+		hold2 = e3;
+	} else {
+		hold2 = e4;
+	}
+//	console.log("two " + hold2);	
+	if ((hold1.charAt(0) === "S") && 
+		(hold2.charAt(0) === "L")) {
+		newE2 += (hold2 + hold1);
+	} else {
+		newE2 += (hold1 + hold2);		
+	}
+//	console.log("3" + newE);
+	pickAllele4a();
+};
+
+function pickAllele4a() {
+
+	var e1 = parent2.tongueOne;
+	var e2 = parent2.tongueTwo;
+	var e3 = mate2.tongueOne;
+	var e4 = mate2.tongueTwo;
+	var hold1 = "";
+	var hold2 = "";	
+
+	var choose1 = Math.random();
+	if (choose1 < 0.5) {
+		hold1 = e1;
+	} else {
+		hold1 = e2;
+	}
+//	console.log("one " + hold1);
+
+	var choose2 = Math.random();
+	if (choose2 < 0.5) {
+		hold2 = e3;
+	} else {
+		hold2 = e4;
+	}
+//	console.log("two " + hold2);	
+	if ((hold1.charAt(0) === hold1.charAt(0).toLowerCase()) && 
+		(hold2.charAt(0) === hold2.charAt(0).toUpperCase())) {
+		newE2 += (hold2 + hold1);
+	} else {
+		newE2 += (hold1 + hold2);		
+	}
+//	console.log("4 " + newE);
+	pickAllele5a();
+};
+
+function pickAllele5a() {
+
+	var e1 = parent2.sexOne;
+	var e2 = parent2.sexTwo;
+	var e3 = mate2.sexOne;
+	var e4 = mate2.sexTwo;
+	var hold1 = "";
+	var hold2 = "";	
+
+	var choose1 = Math.random();
+	if (choose1 < 0.5) {
+		hold1 = e1;
+	} else {
+		hold1 = e2;
+	}
+//	console.log("one " + hold1);
+
+	var choose2 = Math.random();
+	if (choose2 < 0.5) {
+		hold2 = e3;
+	} else {
+		hold2 = e4;
+	}
+//	console.log("two " + hold2);	
+	if ((hold1.charAt(0) === "Y") && 
+		(hold2.charAt(0) === "X")) {
+		newE2 += (hold2 + hold1);
+	} else {
+		newE2 += (hold1 + hold2);		
+	}
+//	console.log("5 " + newE);
+	searchForPuppy2();
+};
+
+function searchForPuppy2() {
+	$.get("/student/puppy1/" + newE2, function(data2c) {
+
+		var timestamp2 = "";
+
+		  	var d = new Date();
+
+		  	var year = d.getFullYear();
+		  	
+		    var month = (d.getMonth() + 1);
+		  	if (month < 10 ) { month = ("0" + month);}
+		    
+		    var day = d.getDate();
+		    if (day < 10 ) {day = ("0" + day);}
+		  	
+		    var hour = d.getHours();
+		    if (hour < 10 ) {hour = ("0" + hour);}
+		  	
+		    var minute = d.getMinutes();
+		    if (minute < 10 ) {minute = ("0" + minute);}
+		  	
+		    var second = d.getSeconds();
+		    if (second < 10 ) {second = ("0" + second);}
+
+		    timestamp2 = (year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second);
+
+
+		var updateData2 = {
+		second_Mate: mate2.id,
+      	second_Offspring: data2c.id,
+      	second_Genotype: data2c.genoType,
+      	second_HuskyImage: data2c.huskyImage,
+      	second_createdAt: timestamp2
+		}
+		$("#secondpuppy").html("<br>Your second puppy: <br><img src=assets/img/" + data2c.huskyImage + ">");
+		updateStudent(updateData2);
+	})
+}
+
+function updateStudent(updateData2) {
+    $.ajax({
+      method: "PUT",
+      url: "/student/update2",
+      data: updateData2
+    })
+  }
 
 });
 

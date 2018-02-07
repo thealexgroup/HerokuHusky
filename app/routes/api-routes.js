@@ -130,12 +130,11 @@ app.get("/student/find/", function(req, res) {
   app.put("/student/update2", function(req, res) {
 
     db.students.update({
-      initial_Parent: req.body.initial_Parent,
-      first_Mate: req.body.first_Mate,
-      first_Offspring: req.body.first_Offspring,
-      first_Genotype: req.body.first_Genotype,
-      first_HuskyImage: req.body.first_HuskyImage,
-      first_createdAt: req.body.first_createdAt
+      second_Mate: req.body.second_Mate,
+      second_Offspring: req.body.second_Offspring,
+      second_Genotype: req.body.second_Genotype,
+      second_HuskyImage: req.body.second_HuskyImage,
+      second_createdAt: req.body.second_createdAt
     }, {
       where: {
         student_Email: newEmail
