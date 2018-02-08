@@ -1,14 +1,3 @@
-//		** items to fix** //
-/*
-
-Hash password on input
-
-Create the timers and other puppy info
-
-Delete route
-
-*/
-
 var express = require('express');
 var app = express();
 var passport = require('passport');
@@ -47,8 +36,8 @@ app.engine('handlebars', exphbs({
 	layoutsDir: "./app/views/layouts/",
 	extname: '.handlebars'
 
-
 }));
+
 app.set('view engine', 'handlebars');
 
 app.get('/', function(req, res) {
@@ -56,9 +45,6 @@ app.get('/', function(req, res) {
 });
 
 
-// app.get('/logout', function(req, res) {
-// 	res.render('login');
-// });
 
 app.get('/add', function(req, res) {
 	res.render('admin_add');
@@ -73,7 +59,7 @@ var models = require("./app/models");
 var authRoute = require('./app/routes/auth.js')(app, passport);
 
 //load passport strategies 
-require('./app/config/passport/passport.js')(passport, models.students); //TSA maybe change to caps!
+require('./app/config/passport/passport.js')(passport, models.students); 
 
 //Sync Database
 //importing the models, then calling the sequelize sync function

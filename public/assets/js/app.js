@@ -1059,6 +1059,258 @@ function updateStudent3(updateData3) {
     })
   }
 
+
+// get fourth parent and mate information
+
+$("#submit4").on("click", function(event) { //change submit number
+
+	    event.preventDefault();
+	    var third_Offspring = studentInfo.third_Offspring;  //change 2
+	    var fourth_Mate =  $('input[name="fourth_Mate"]').val(); //change 2
+	    checkValues4(third_Offspring, fourth_Mate); //change 3
+});
+
+
+function checkValues4(third_Offspring, fourth_Mate) {
+	if ((third_Offspring > 81 && fourth_Mate > 81) || (third_Offspring < 82 && fourth_Mate < 82) || 
+		(!fourth_Mate) || (!third_Offspring) || (third_Offspring < 1)  || (third_Offspring > 162) ||
+		(fourth_Mate < 1)  || (fourth_Mate > 162)) {
+		$("#myModal").modal();
+	} else {
+		removeSubmit4(third_Offspring, fourth_Mate);
+	}
+}
+
+function removeSubmit4(third_Offspring, fourth_Mate) {
+	$("#submit4").css("display", "none");
+	$("#show4").css("display", "inline");
+	searchDog4a(third_Offspring, fourth_Mate);
+}
+
+
+function searchDog4a(third_Offspring, fourth_Mate) {
+	$.get("/student/get/" + third_Offspring, function(data4a) {
+		searchDog4b(third_Offspring, fourth_Mate, data4a)
+	})
+}
+
+function searchDog4b(third_Offspring, fourth_Mate, data4a) {
+	$.get("/student/get/" + fourth_Mate, function(data4b) {
+		console.log("Husky 4b " + data4b.huskyImage);		
+		$("#holdsecond4a").html("<img src=assets/img/" + data4b.huskyImage + ">");		
+		parent4 = data4a;
+		mate4 = data4b;
+		pickAllele1c();
+	})
+}
+
+//randomly choose between one or the other allele for eye color
+function pickAllele1c() {
+
+	var e1 = parent4.eyeColorOne;
+	var e2 = parent4.eyeColorTwo;
+	var e3 = mate4.eyeColorOne;
+	var e4 = mate4.eyeColorTwo;
+	var hold1 = "";
+	var hold2 = "";	
+
+	var choose1 = Math.random();
+	if (choose1 < 0.5) {
+		hold1 = e1;
+	} else {
+		hold1 = e2;
+	}
+
+	var choose2 = Math.random();
+	if (choose2 < 0.5) {
+		hold2 = e3;
+	} else {
+		hold2 = e4;
+	}
+	if ((hold1.charAt(0) === hold1.charAt(0).toLowerCase()) && 
+		(hold2.charAt(0) === hold2.charAt(0).toUpperCase())) {
+		newE4 += (hold2 + hold1);
+	} else {
+		newE4 += (hold1 + hold2);		
+	}
+	pickAllele2c();
+};
+
+function pickAllele2c() {
+
+	var e1 = parent4.coatColorOne;
+	var e2 = parent4.coatColorTwo;
+	var e3 = mate4.coatColorOne;
+	var e4 = mate4.coatColorTwo;
+	var hold1 = "";
+	var hold2 = "";	
+
+	var choose1 = Math.random();
+	if (choose1 < 0.5) {
+		hold1 = e1;
+	} else {
+		hold1 = e2;
+	}
+
+	var choose2 = Math.random();
+	if (choose2 < 0.5) {
+		hold2 = e3;
+	} else {
+		hold2 = e4;
+	}
+
+	if ((hold1.charAt(0) === "W") && 
+		(hold2.charAt(0) === "G")) {
+		newE4 += (hold2 + hold1);
+	} else {
+		newE4 += (hold1 + hold2);		
+	}
+	pickAllele3c();
+};
+
+function pickAllele3c() {
+
+	var e1 = parent4.tailLengthOne;
+	var e2 = parent4.tailLengthTwo;
+	var e3 = mate4.tailLengthOne;
+	var e4 = mate4.tailLengthTwo;
+	var hold1 = "";
+	var hold2 = "";	
+
+	var choose1 = Math.random();
+	if (choose1 < 0.5) {
+		hold1 = e1;
+	} else {
+		hold1 = e2;
+	}
+
+	var choose2 = Math.random();
+	if (choose2 < 0.5) {
+		hold2 = e3;
+	} else {
+		hold2 = e4;
+	}
+
+	if ((hold1.charAt(0) === "S") && 
+		(hold2.charAt(0) === "L")) {
+		newE4 += (hold2 + hold1);
+	} else {
+		newE4 += (hold1 + hold2);		
+	}
+	pickAllele4c();
+};
+
+function pickAllele4c() {
+
+	var e1 = parent4.tongueOne;
+	var e2 = parent4.tongueTwo;
+	var e3 = mate4.tongueOne;
+	var e4 = mate4.tongueTwo;
+	var hold1 = "";
+	var hold2 = "";	
+
+	var choose1 = Math.random();
+	if (choose1 < 0.5) {
+		hold1 = e1;
+	} else {
+		hold1 = e2;
+	}
+
+	var choose2 = Math.random();
+	if (choose2 < 0.5) {
+		hold2 = e3;
+	} else {
+		hold2 = e4;
+	}
+
+	if ((hold1.charAt(0) === hold1.charAt(0).toLowerCase()) && 
+		(hold2.charAt(0) === hold2.charAt(0).toUpperCase())) {
+		newE4 += (hold2 + hold1);
+	} else {
+		newE4 += (hold1 + hold2);		
+	}
+	pickAllele5c();
+};
+
+function pickAllele5c() {
+
+	var e1 = parent4.sexOne;
+	var e2 = parent4.sexTwo;
+	var e3 = mate4.sexOne;
+	var e4 = mate4.sexTwo;
+	var hold1 = "";
+	var hold2 = "";	
+
+	var choose1 = Math.random();
+	if (choose1 < 0.5) {
+		hold1 = e1;
+	} else {
+		hold1 = e2;
+	}
+
+	var choose2 = Math.random();
+	if (choose2 < 0.5) {
+		hold2 = e3;
+	} else {
+		hold2 = e4;
+	}
+
+	if ((hold1.charAt(0) === "Y") && 
+		(hold2.charAt(0) === "X")) {
+		newE4 += (hold2 + hold1);
+	} else {
+		newE4 += (hold1 + hold2);		
+	}
+	searchForPuppy4();
+};
+
+function searchForPuppy4() {
+	$.get("/student/puppy1/" + newE4, function(data2e) {
+
+		var timestamp4 = "";
+
+		  	var d = new Date();
+
+		  	var year = d.getFullYear();
+		  	
+		    var month = (d.getMonth() + 1);
+		  	if (month < 10 ) { month = ("0" + month);}
+		    
+		    var day = d.getDate();
+		    if (day < 10 ) {day = ("0" + day);}
+		  	
+		    var hour = d.getHours();
+		    if (hour < 10 ) {hour = ("0" + hour);}
+		  	
+		    var minute = d.getMinutes();
+		    if (minute < 10 ) {minute = ("0" + minute);}
+		  	
+		    var second = d.getSeconds();
+		    if (second < 10 ) {second = ("0" + second);}
+
+		    timestamp4 = (year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second);
+
+
+		var updateData4 = {
+		fourth_Mate: mate4.id,
+      	fourth_Offspring: data2e.id,
+      	fourth_Genotype: data2e.genoType,
+      	fourth_HuskyImage: data2e.huskyImage,
+      	fourth_createdAt: timestamp4
+		}
+		$("#fourthpuppy").html("<br>Your second puppy: <br><img src=assets/img/" + data2e.huskyImage + ">");
+		updateStudent4(updateData4);
+	})
+}
+
+function updateStudent4(updateData4) {
+    $.ajax({
+      method: "PUT",
+      url: "/student/update4",
+      data: updateData4
+    })
+  }
+
 });
 
 

@@ -162,6 +162,91 @@ app.get("/student/find/", function(req, res) {
     });
   });
 
+app.put("/student/update4", function(req, res) {
+
+    db.students.update({
+      fourth_Mate: req.body.fourth_Mate,
+      fourth_Offspring: req.body.fourth_Offspring,
+      fourth_Genotype: req.body.fourth_Genotype,
+      fourth_HuskyImage: req.body.fourth_HuskyImage,
+      fourth_createdAt: req.body.fourth_createdAt
+    }, {
+      where: {
+        student_Email: newEmail
+      }
+    }).then(function(result) {
+      res.render("login", result);
+    });
+  });
+
+app.put("/student/update5", function(req, res) {
+
+    db.students.update({
+      fifth_Mate: req.body.fifth_Mate,
+      fifth_Offspring: req.body.fifth_Offspring,
+      fifth_Genotype: req.body.fifth_Genotype,
+      fifth_HuskyImage: req.body.fifth_HuskyImage,
+      fifth_createdAt: req.body.fifth_createdAt
+    }, {
+      where: {
+        student_Email: newEmail
+      }
+    }).then(function(result) {
+      res.render("login", result);
+    });
+  });
+
+app.put("/student/update6", function(req, res) {
+
+    db.students.update({
+      sixth_Mate: req.body.sixth_Mate,
+      sixth_Offspring: req.body.sixth_Offspring,
+      sixth_Genotype: req.body.sixth_Genotype,
+      sixth_HuskyImage: req.body.sixth_HuskyImage,
+      sixth_createdAt: req.body.sixth_createdAt
+    }, {
+      where: {
+        student_Email: newEmail
+      }
+    }).then(function(result) {
+      res.render("login", result);
+    });
+  });
+
+app.put("/student/update7", function(req, res) {
+
+    db.students.update({
+      seventh_Mate: req.body.seventh_Mate,
+      seventh_Offspring: req.body.seventh_Offspring,
+      seventh_Genotype: req.body.seventh_Genotype,
+      seventh_HuskyImage: req.body.seventh_HuskyImage,
+      seventh_createdAt: req.body.seventh_createdAt
+    }, {
+      where: {
+        student_Email: newEmail
+      }
+    }).then(function(result) {
+      res.render("login", result);
+    });
+  });
+
+app.put("/student/update8", function(req, res) {
+
+    db.students.update({
+      eighth_Mate: req.body.eighth_Mate,
+      eighth_Offspring: req.body.eighth_Offspring,
+      eighth_Genotype: req.body.eighth_Genotype,
+      eighth_HuskyImage: req.body.eighth_HuskyImage,
+      eighth_createdAt: req.body.eighth_createdAt
+    }, {
+      where: {
+        student_Email: newEmail
+      }
+    }).then(function(result) {
+      res.render("login", result);
+    });
+  });
+
 };
 
 
