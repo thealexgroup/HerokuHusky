@@ -32,6 +32,7 @@ module.exports = function(app, passport) {
 //student get and post routes
 
   app.get("/student/puppy1/:geno", function(req, res) {
+    console.log("Did I get to my req? " + req.params.geno);
     db.dogs.findOne({
       where:  Sequelize.where(
         Sequelize.cast(Sequelize.col('genoType'), 'BINARY'), {$like: req.params.geno})
@@ -135,6 +136,23 @@ app.get("/student/find/", function(req, res) {
       second_Genotype: req.body.second_Genotype,
       second_HuskyImage: req.body.second_HuskyImage,
       second_createdAt: req.body.second_createdAt
+    }, {
+      where: {
+        student_Email: newEmail
+      }
+    }).then(function(result) {
+      res.render("login", result);
+    });
+  });
+
+  app.put("/student/update3", function(req, res) {
+
+    db.students.update({
+      third_Mate: req.body.third_Mate,
+      third_Offspring: req.body.third_Offspring,
+      third_Genotype: req.body.third_Genotype,
+      third_HuskyImage: req.body.third_HuskyImage,
+      third_createdAt: req.body.third_createdAt
     }, {
       where: {
         student_Email: newEmail
