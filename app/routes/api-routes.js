@@ -5,20 +5,22 @@
 // // =============================================================
 
 var path = require("path");
-var db = require("../models");
 var Sequelize = require('sequelize');
 var passport = require('passport');
 var bCrypt = require('bcrypt-nodejs');
+
+//We used this to get the student email they logged in with
 require('./auth.js');
 
+//require models, or at least the index in models
+var db = require("../models");
 
-// // Routes
+// export routs
 // // =============================================================
 module.exports = function(app, passport) {
 
 
-
-  //student get and post routes
+//this route gets dog information from the dog table to use in the genetic combinations
   app.get("/student/get/:id", function(req, res) {
     db.dogs.findOne({
       where:  {
@@ -29,10 +31,10 @@ module.exports = function(app, passport) {
     });
   });
 
-//student get and post routes
 
+//this route gets the genetic outcome. it's case sensitive, so cast the variable as binary as there 
+//are duplicates by string but NOT by case.
   app.get("/student/puppy1/:geno", function(req, res) {
-    console.log("Did I get to my req? " + req.params.geno);
     db.dogs.findOne({
       where:  Sequelize.where(
         Sequelize.cast(Sequelize.col('genoType'), 'BINARY'), {$like: req.params.geno})
@@ -42,17 +44,16 @@ module.exports = function(app, passport) {
   });
 
 
-  // cms route loads cms.html
+//admin route to display all student information on admin page
   app.get("/admin", function(req, res) {
-    // res.sendFile(path.join(__dirname, "../public/admin.html"));
+
     db.students.findAll({
 
     }).then(function(result) {
-      // response.json(result);
       var hbsObject = { 
         Students: result
       };
-      // res.json(hbsObject);
+      // render the object to admin page to use in the table.
       res.render("admin", hbsObject);
     });
     
@@ -61,7 +62,7 @@ module.exports = function(app, passport) {
   // route loads the add students page, where teachers will enter a new student into the student table
   app.post("/admin_add", function(req, res) {
 
-
+    //this hashes the password, or student id in this case, in the database.  
     var hashPass = bCrypt.hashSync(req.body.student_Id);
 
     db.students.create({
@@ -80,13 +81,13 @@ module.exports = function(app, passport) {
 
   });
 
-  // route loads the add students page, where teachers will enter a new student into the student table
-
+//logout page, just login page
   app.get("/logout", function(req, res) {
     res.render("login");
   });
 
 
+//delete student route from admin, if they would like to delete a student from the database
   app.post("/admin_delete/delete", function(req, res) {
   
     db.students.destroy({
@@ -100,6 +101,7 @@ module.exports = function(app, passport) {
   });
 
 
+//student find route, get the information on a student based on email used to login
 app.get("/student/find/", function(req, res) {
     db.students.findOne({
       where:  {
@@ -110,7 +112,14 @@ app.get("/student/find/", function(req, res) {
     });
   });
 
+
+//these are the routes for updating each puppy
+
+//first route
   app.put("/student/update", function(req, res) {
+
+//take information from form submission, update the students table with information
+//for each column
 
     db.students.update({
       initial_Parent: req.body.initial_Parent,
@@ -128,6 +137,7 @@ app.get("/student/find/", function(req, res) {
     });
   });
 
+//second update route, same as above except update second submission
   app.put("/student/update2", function(req, res) {
 
     db.students.update({
@@ -145,6 +155,7 @@ app.get("/student/find/", function(req, res) {
     });
   });
 
+//third update route
   app.put("/student/update3", function(req, res) {
 
     db.students.update({
@@ -162,6 +173,7 @@ app.get("/student/find/", function(req, res) {
     });
   });
 
+//fourth update route
 app.put("/student/update4", function(req, res) {
 
     db.students.update({
@@ -179,6 +191,7 @@ app.put("/student/update4", function(req, res) {
     });
   });
 
+//fifth update route
 app.put("/student/update5", function(req, res) {
 
     db.students.update({
@@ -196,6 +209,7 @@ app.put("/student/update5", function(req, res) {
     });
   });
 
+//sixth update route
 app.put("/student/update6", function(req, res) {
 
     db.students.update({
@@ -213,6 +227,7 @@ app.put("/student/update6", function(req, res) {
     });
   });
 
+//seventh update route
 app.put("/student/update7", function(req, res) {
 
     db.students.update({
@@ -230,9 +245,10 @@ app.put("/student/update7", function(req, res) {
     });
   });
 
+//eigth and final update route
 app.put("/student/update8", function(req, res) {
 
-    db.students.update({
+  db.students.update({
       eighth_Mate: req.body.eighth_Mate,
       eighth_Offspring: req.body.eighth_Offspring,
       eighth_Genotype: req.body.eighth_Genotype,
