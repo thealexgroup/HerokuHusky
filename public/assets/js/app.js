@@ -132,7 +132,7 @@ function getTimeDiff1(date1, currentTime) {
         console.log("UTC1 " + utc1);
         var utc2 = Date.UTC(old_date_obj.getFullYear(), old_date_obj.getMonth(), old_date_obj.getDate(), old_date_obj.getHours());
         console.log("UTC2 " + utc1);        
-        totalTimeDiff1 = (Math.floor((utc1 - utc2) / (1000 * 60 * 60) + 8));
+        totalTimeDiff1 = (Math.floor((utc1 - utc2) / (1000 * 60 * 60)));
         displayFirstDivs(currentTime, totalTimeDiff1);
 }
 
@@ -171,7 +171,7 @@ function getTimeDiff2(currentTime, totalTimeDiff1) {
         var utc1 = Date.UTC(new_date_obj.getFullYear(), new_date_obj.getMonth(), new_date_obj.getDate(), new_date_obj.getHours());
 //        console.log("UTC1 " + utc1);
         var utc2 = Date.UTC(old_date_obj.getFullYear(), old_date_obj.getMonth(), old_date_obj.getDate(), old_date_obj.getHours());
-        totalTimeDiff2 = (Math.floor((utc1 - utc2) / (1000 * 60 * 60) + 8));
+        totalTimeDiff2 = (Math.floor((utc1 - utc2) / (1000 * 60 * 60)));
         console.log("Second time difference " + totalTimeDiff2)
         displaySecondDivs(currentTime, totalTimeDiff1, totalTimeDiff2);
 }
@@ -269,9 +269,44 @@ function displayFourthDivs(currentTime, totalTimeDiff3, totalTimeDiff4) {
 			$("#holdfirst4c").html("<img src=assets/img/" + studentInfo.third_HuskyImage + ">");			
 			$("#holdsecond4c").html("<img src=assets/img/" + studentInfo.fourth_Mate + ".jpg>");		
 		}		
-//		getTimeDiff5(currentTime, totalTimeDiff4);
+		getTimeDiff5(currentTime, totalTimeDiff4);
 }
 
+function getTimeDiff5(currentTime, totalTimeDiff4) {
+		if (studentInfo.fifth_createdAt) {
+        old_date = studentInfo.fifth_createdAt.slice(0, 19).replace('T', ' ');
+    } else {
+    	old_date = currentTime;
+    }
+        new_date = currentTime;
+
+        old_date_obj = new Date(Date.parse(old_date, "dd/mm/yyyy HH:mm:ss"));
+        new_date_obj = new Date(Date.parse(new_date, "dd/mm/yyyy HH:mm:ss"));
+
+        var utc1 = Date.UTC(new_date_obj.getFullYear(), new_date_obj.getMonth(), new_date_obj.getDate(), new_date_obj.getHours());
+        var utc2 = Date.UTC(old_date_obj.getFullYear(), old_date_obj.getMonth(), old_date_obj.getDate(), old_date_obj.getHours());
+        totalTimeDiff5 = (Math.floor((utc1 - utc2) / (1000 * 60 * 60)));
+        console.log("Fifth time difference " + totalTimeDiff5)
+        displayFifthDivs(currentTime, totalTimeDiff4, totalTimeDiff5);
+}
+
+function displayFifthDivs(currentTime, totalTimeDiff4, totalTimeDiff5) {
+	if (!studentInfo.fifth_createdAt && totalTimeDiff4 > 1) { //TSA CHANGE THIS TO 17 FOR LIVE
+			$("#familyTree5a").show();
+			$("#holdfirst5a").html("<img src=assets/img/" + studentInfo.fourth_HuskyImage + ">");						
+		}
+	if (studentInfo.fifth_createdAt && totalTimeDiff5 < 2) {//TSA CHANGE THIS TO 18 FOR LIVE
+			$("#familyTree5b").show();
+			$("#holdfirst5b").html("<img src=assets/img/" + studentInfo.fourth_HuskyImage + ">");			
+			$("#holdsecond5b").html("<img src=assets/img/" + studentInfo.fifth_Mate + ".jpg>");		
+		}
+	if (studentInfo.fifth_createdAt && totalTimeDiff5 > 1) {//TSA CHANGE THIS TO 17 FOR LIVE
+			$("#familyTree5c").show();
+			$("#holdfirst5c").html("<img src=assets/img/" + studentInfo.fourth_HuskyImage + ">");			
+			$("#holdsecond5c").html("<img src=assets/img/" + studentInfo.fifth_Mate + ".jpg>");		
+		}		
+//		getTimeDiff6(currentTime, totalTimeDiff5);
+}
 
 // get first parent and mate information
 
@@ -1308,6 +1343,258 @@ function updateStudent4(updateData4) {
       method: "PUT",
       url: "/student/update4",
       data: updateData4
+    })
+  }
+
+
+// get fifth parent and mate information
+
+$("#submit5").on("click", function(event) { //change submit number
+
+	    event.preventDefault();
+	    var fourth_Offspring = studentInfo.fourth_Offspring;  //change 2
+	    var fifth_Mate =  $('input[name="fifth_Mate"]').val(); //change 2
+	    checkValues5(fourth_Offspring, fifth_Mate); //change 3
+});
+
+
+function checkValues5(fourth_Offspring, fifth_Mate) {
+	if ((fourth_Offspring > 81 && fifth_Mate > 81) || (fourth_Offspring < 82 && fifth_Mate < 82) || 
+		(!fifth_Mate) || (!fourth_Offspring) || (fourth_Offspring < 1)  || (fourth_Offspring > 162) ||
+		(fifth_Mate < 1)  || (fifth_Mate > 162)) {
+		$("#myModal").modal();
+	} else {
+		removeSubmit5(fourth_Offspring, fifth_Mate);
+	}
+}
+
+function removeSubmit5(fourth_Offspring, fifth_Mate) {
+	$("#submit5").css("display", "none");
+	$("#show5").css("display", "inline");
+	searchDog5a(fourth_Offspring, fifth_Mate);
+}
+
+
+function searchDog5a(fourth_Offspring, fifth_Mate) {
+	$.get("/student/get/" + fourth_Offspring, function(data5a) {
+		searchDog5b(fourth_Offspring, fifth_Mate, data5a)
+	})
+}
+
+function searchDog5b(fourth_Offspring, fifth_Mate, data5a) {
+	$.get("/student/get/" + fifth_Mate, function(data5b) {
+		console.log("Husky 5b " + data5b.huskyImage);		
+		$("#holdsecond5a").html("<img src=assets/img/" + data5b.huskyImage + ">");		
+		parent5 = data5a;
+		mate5 = data5b;
+		pickAllele1d();
+	})
+}
+
+//randomly choose between one or the other allele for eye color
+function pickAllele1d() {
+
+	var e1 = parent5.eyeColorOne;
+	var e2 = parent5.eyeColorTwo;
+	var e3 = mate5.eyeColorOne;
+	var e4 = mate5.eyeColorTwo;
+	var hold1 = "";
+	var hold2 = "";	
+
+	var choose1 = Math.random();
+	if (choose1 < 0.5) {
+		hold1 = e1;
+	} else {
+		hold1 = e2;
+	}
+
+	var choose2 = Math.random();
+	if (choose2 < 0.5) {
+		hold2 = e3;
+	} else {
+		hold2 = e4;
+	}
+	if ((hold1.charAt(0) === hold1.charAt(0).toLowerCase()) && 
+		(hold2.charAt(0) === hold2.charAt(0).toUpperCase())) {
+		newE5 += (hold2 + hold1);
+	} else {
+		newE5 += (hold1 + hold2);		
+	}
+	pickAllele2d();
+};
+
+function pickAllele2d() {
+
+	var e1 = parent5.coatColorOne;
+	var e2 = parent5.coatColorTwo;
+	var e3 = mate5.coatColorOne;
+	var e4 = mate5.coatColorTwo;
+	var hold1 = "";
+	var hold2 = "";	
+
+	var choose1 = Math.random();
+	if (choose1 < 0.5) {
+		hold1 = e1;
+	} else {
+		hold1 = e2;
+	}
+
+	var choose2 = Math.random();
+	if (choose2 < 0.5) {
+		hold2 = e3;
+	} else {
+		hold2 = e4;
+	}
+
+	if ((hold1.charAt(0) === "W") && 
+		(hold2.charAt(0) === "G")) {
+		newE5 += (hold2 + hold1);
+	} else {
+		newE5 += (hold1 + hold2);		
+	}
+	pickAllele3d();
+};
+
+function pickAllele3d() {
+
+	var e1 = parent5.tailLengthOne;
+	var e2 = parent5.tailLengthTwo;
+	var e3 = mate5.tailLengthOne;
+	var e4 = mate5.tailLengthTwo;
+	var hold1 = "";
+	var hold2 = "";	
+
+	var choose1 = Math.random();
+	if (choose1 < 0.5) {
+		hold1 = e1;
+	} else {
+		hold1 = e2;
+	}
+
+	var choose2 = Math.random();
+	if (choose2 < 0.5) {
+		hold2 = e3;
+	} else {
+		hold2 = e4;
+	}
+
+	if ((hold1.charAt(0) === "S") && 
+		(hold2.charAt(0) === "L")) {
+		newE5 += (hold2 + hold1);
+	} else {
+		newE5 += (hold1 + hold2);		
+	}
+	pickAllele4d();
+};
+
+function pickAllele4d() {
+
+	var e1 = parent5.tongueOne;
+	var e2 = parent5.tongueTwo;
+	var e3 = mate5.tongueOne;
+	var e4 = mate5.tongueTwo;
+	var hold1 = "";
+	var hold2 = "";	
+
+	var choose1 = Math.random();
+	if (choose1 < 0.5) {
+		hold1 = e1;
+	} else {
+		hold1 = e2;
+	}
+
+	var choose2 = Math.random();
+	if (choose2 < 0.5) {
+		hold2 = e3;
+	} else {
+		hold2 = e4;
+	}
+
+	if ((hold1.charAt(0) === hold1.charAt(0).toLowerCase()) && 
+		(hold2.charAt(0) === hold2.charAt(0).toUpperCase())) {
+		newE5 += (hold2 + hold1);
+	} else {
+		newE5 += (hold1 + hold2);		
+	}
+	pickAllele5d();
+};
+
+function pickAllele5d() {
+
+	var e1 = parent5.sexOne;
+	var e2 = parent5.sexTwo;
+	var e3 = mate5.sexOne;
+	var e4 = mate5.sexTwo;
+	var hold1 = "";
+	var hold2 = "";	
+
+	var choose1 = Math.random();
+	if (choose1 < 0.5) {
+		hold1 = e1;
+	} else {
+		hold1 = e2;
+	}
+
+	var choose2 = Math.random();
+	if (choose2 < 0.5) {
+		hold2 = e3;
+	} else {
+		hold2 = e4;
+	}
+
+	if ((hold1.charAt(0) === "Y") && 
+		(hold2.charAt(0) === "X")) {
+		newE5 += (hold2 + hold1);
+	} else {
+		newE5 += (hold1 + hold2);		
+	}
+	searchForPuppy5();
+};
+
+function searchForPuppy5() {
+	$.get("/student/puppy1/" + newE5, function(data2f) {
+
+		var timestamp5 = "";
+
+		  	var d = new Date();
+
+		  	var year = d.getFullYear();
+		  	
+		    var month = (d.getMonth() + 1);
+		  	if (month < 10 ) { month = ("0" + month);}
+		    
+		    var day = d.getDate();
+		    if (day < 10 ) {day = ("0" + day);}
+		  	
+		    var hour = d.getHours();
+		    if (hour < 10 ) {hour = ("0" + hour);}
+		  	
+		    var minute = d.getMinutes();
+		    if (minute < 10 ) {minute = ("0" + minute);}
+		  	
+		    var second = d.getSeconds();
+		    if (second < 10 ) {second = ("0" + second);}
+
+		    timestamp5 = (year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second);
+
+
+		var updateData5 = {
+		fifth_Mate: mate5.id,
+      	fifth_Offspring: data2f.id,
+      	fifth_Genotype: data2f.genoType,
+      	fifth_HuskyImage: data2f.huskyImage,
+      	fifth_createdAt: timestamp5
+		}
+		$("#fifthpuppy").html("<br>Your fifth puppy: <br><img src=assets/img/" + data2f.huskyImage + ">");
+		updateStudent5(updateData5);
+	})
+}
+
+function updateStudent5(updateData5) {
+    $.ajax({
+      method: "PUT",
+      url: "/student/update5",
+      data: updateData5
     })
   }
 
