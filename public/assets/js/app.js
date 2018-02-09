@@ -410,7 +410,51 @@ function displaySixthDivs(currentTime, totalTimeDiff5, totalTimeDiff6) {
         $("#holdsecond6c").html("<img src=assets/img/" + studentInfo.sixth_Mate + ".jpg>");		
     }
 
-//    getTimeDiff7(currentTime, totalTimeDiff6);
+    getTimeDiff7(currentTime, totalTimeDiff6);
+}
+
+function getTimeDiff7(currentTime, totalTimeDiff6) {
+
+    if (studentInfo.seventh_createdAt) {
+        old_date = studentInfo.seventh_createdAt.slice(0, 19).replace('T', ' ');
+    } else {
+
+        old_date = currentTime;
+    }
+
+    new_date = currentTime;
+
+    old_date_obj = new Date(Date.parse(old_date, "dd/mm/yyyy HH:mm:ss"));
+    new_date_obj = new Date(Date.parse(new_date, "dd/mm/yyyy HH:mm:ss"));
+
+    var utc1 = Date.UTC(new_date_obj.getFullYear(), new_date_obj.getMonth(), new_date_obj.getDate(), new_date_obj.getHours());
+    var utc2 = Date.UTC(old_date_obj.getFullYear(), old_date_obj.getMonth(), old_date_obj.getDate(), old_date_obj.getHours());
+
+    totalTimeDiff7 = (Math.floor((utc1 - utc2) / (1000 * 60 * 60) + 8));
+
+    displaySeventhDivs(currentTime, totalTimeDiff6, totalTimeDiff7);
+}
+
+function displaySeventhDivs(currentTime, totalTimeDiff6, totalTimeDiff7) {
+
+    if (!studentInfo.seventh_createdAt && totalTimeDiff6 > 1) { //TSA CHANGE THIS TO 17 FOR LIVE
+        $("#familyTree7a").show();
+        $("#holdfirst7a").html("<img src=assets/img/" + studentInfo.sixth_HuskyImage + ">");                        
+    }
+
+    if (studentInfo.seventh_createdAt && totalTimeDiff7 < 2) {//TSA CHANGE THIS TO 18 FOR LIVE
+        $("#familyTree7b").show();
+        $("#holdfirst7b").html("<img src=assets/img/" + studentInfo.sixth_HuskyImage + ">");            
+        $("#holdsecond7b").html("<img src=assets/img/" + studentInfo.seventh_Mate + ".jpg>");       
+    }
+
+    if (studentInfo.seventh_createdAt && totalTimeDiff7 > 1) {//TSA CHANGE THIS TO 17 FOR LIVE
+        $("#familyTree7c").show();
+        $("#holdfirst7c").html("<img src=assets/img/" + studentInfo.sixth_HuskyImage + ">");            
+        $("#holdsecond7c").html("<img src=assets/img/" + studentInfo.seventh_Mate + ".jpg>");       
+    }
+
+//    getTimeDiff8(currentTime, totalTimeDiff7);
 }
 
 
@@ -447,8 +491,9 @@ function checkValues(iniParent, fMate) {
         $("#myModal").modal();
 
     } else {
+
         //otherwise invoke removeSubmit function, keep passing these values
-		removeSubmit(iniParent, fMate);
+        removeSubmit(iniParent, fMate);
     }
 };
 
@@ -477,7 +522,7 @@ function searchFirstDog(iniParent, fMate) {
         $("#holdfirst1a").html("<img src=assets/img/" + data1.huskyImage + ">");
 
         //write initial parent data to global variable
-		parent = data1;
+        parent = data1;
 
         //invoke search for second dog input, again passing values
         searchSecondDog(iniParent, fMate, data1)
@@ -2041,6 +2086,291 @@ function updateStudent6(updateData6) {
         data: updateData6
     })
 };
+
+// get seventh parent and mate information
+$("#submit7").on("click", function(event) {
+    
+    event.preventDefault();
+    
+    var sixth_Offspring = studentInfo.sixth_Offspring; 
+    var seventh_Mate =  $('input[name="seventh_Mate"]').val();
+
+    checkValues7(sixth_Offspring, seventh_Mate);
+});
+
+
+function checkValues7(sixth_Offspring, seventh_Mate) {
+    if ((sixth_Offspring > 81 && seventh_Mate > 81) || (sixth_Offspring < 82 && seventh_Mate < 82) || 
+        (!seventh_Mate) || (!sixth_Offspring) || (sixth_Offspring < 1)  || (sixth_Offspring > 162) ||
+        (seventh_Mate < 1)  || (seventh_Mate > 162)) {
+
+        $("#myModal").modal();
+    } else {
+
+        removeSubmit7(sixth_Offspring, seventh_Mate);
+    }
+};
+
+function removeSubmit7(sixth_Offspring, seventh_Mate) {
+
+    $("#submit7").css("display", "none");
+    $("#show7").css("display", "inline");
+
+    searchDog7a(sixth_Offspring, seventh_Mate);
+};
+
+
+function searchDog7a(sixth_Offspring, seventh_Mate) {
+
+    $.get("/student/get/" + sixth_Offspring, function(data7a) {
+        searchDog7b(sixth_Offspring, seventh_Mate, data7a)
+   })
+};
+
+function searchDog7b(sixth_Offspring, seventh_Mate, data7a) {
+
+    $.get("/student/get/" + seventh_Mate, function(data7b) {
+
+        $("#holdsecond7a").html("<img src=assets/img/" + data7b.huskyImage + ">");      
+
+        parent7 = data7a;
+        mate7 = data7b;
+        pickAllele1f();
+    })
+};
+
+//randomly choose between one or the other allele for eye color
+function pickAllele1f() {
+
+    var e1 = parent7.eyeColorOne;
+    var e2 = parent7.eyeColorTwo;
+    var e3 = mate7.eyeColorOne;
+    var e4 = mate7.eyeColorTwo;
+
+    var hold1 = "";
+    var hold2 = ""; 
+
+    var choose1 = Math.random();
+
+    if (choose1 < 0.5) {
+        hold1 = e1;
+    } else {
+        hold1 = e2;
+    }
+
+    var choose2 = Math.random();
+
+    if (choose2 < 0.5) {
+        hold2 = e3;
+    } else {
+        hold2 = e4;
+    }
+
+    if ((hold1.charAt(0) === hold1.charAt(0).toLowerCase()) && 
+        (hold2.charAt(0) === hold2.charAt(0).toUpperCase())) {
+
+        newE7 += (hold2 + hold1);
+    } else {
+
+        newE7 += (hold1 + hold2);       
+    }
+
+    pickAllele2f();
+};
+
+function pickAllele2f() {
+
+    var e1 = parent7.coatColorOne;
+    var e2 = parent7.coatColorTwo;
+    var e3 = mate7.coatColorOne;
+    var e4 = mate7.coatColorTwo;
+
+    var hold1 = "";
+    var hold2 = ""; 
+
+    var choose1 = Math.random();
+
+
+    if (choose1 < 0.5) {
+        hold1 = e1;
+    } else {
+        hold1 = e2;
+    }
+
+    var choose2 = Math.random();
+
+    if (choose2 < 0.5) {
+        hold2 = e3;
+    } else {
+        hold2 = e4;
+    }
+
+
+    if ((hold1.charAt(0) === "W") && (hold2.charAt(0) === "G")) {
+        newE7 += (hold2 + hold1);
+    } else {
+        newE7 += (hold1 + hold2);       
+    }
+
+    pickAllele3f();
+};
+
+function pickAllele3f() {
+
+    var e1 = parent7.tailLengthOne;
+    var e2 = parent7.tailLengthTwo;
+    var e3 = mate7.tailLengthOne;
+    var e4 = mate7.tailLengthTwo;
+
+    var hold1 = "";
+    var hold2 = ""; 
+
+    var choose1 = Math.random();
+
+    if (choose1 < 0.5) {
+        hold1 = e1;
+    } else {
+        hold1 = e2;
+    }
+
+    var choose2 = Math.random();
+
+    if (choose2 < 0.5) {
+        hold2 = e3;
+    } else {
+        hold2 = e4;
+    }
+
+    if ((hold1.charAt(0) === "S") && (hold2.charAt(0) === "L")) {
+        newE7 += (hold2 + hold1);
+    } else {
+        newE7 += (hold1 + hold2);       
+    }
+
+    pickAllele4f();
+};
+
+function pickAllele4f() {
+
+    var e1 = parent7.tongueOne;
+    var e2 = parent7.tongueTwo;
+    var e3 = mate7.tongueOne;
+    var e4 = mate7.tongueTwo;
+
+    var hold1 = "";
+    var hold2 = ""; 
+
+    var choose1 = Math.random();
+
+    if (choose1 < 0.5) {
+        hold1 = e1;
+    } else {
+        hold1 = e2;
+    }
+
+    var choose2 = Math.random();
+
+    if (choose2 < 0.5) {
+        hold2 = e3;
+    } else {
+        hold2 = e4;
+    }
+
+    if ((hold1.charAt(0) === hold1.charAt(0).toLowerCase()) && (hold2.charAt(0) === hold2.charAt(0).toUpperCase())) {
+        newE7 += (hold2 + hold1);
+    } else {
+        newE7 += (hold1 + hold2);       
+    }
+
+    pickAllele5f();
+};
+
+function pickAllele5f() {
+
+    var e1 = parent7.sexOne;
+    var e2 = parent7.sexTwo;
+    var e3 = mate7.sexOne;
+    var e4 = mate7.sexTwo;
+
+    var hold1 = "";
+    var hold2 = ""; 
+
+    var choose1 = Math.random();
+
+    if (choose1 < 0.5) {
+        hold1 = e1;
+    } else {
+        hold1 = e2;
+    }
+
+    var choose2 = Math.random();
+
+    if (choose2 < 0.5) {
+        hold2 = e3;
+    } else {
+        hold2 = e4;
+    }
+
+    if ((hold1.charAt(0) === "Y") && (hold2.charAt(0) === "X")) {
+        newE7 += (hold2 + hold1);
+    } else {
+        newE7 += (hold1 + hold2);       
+    }
+
+    searchForPuppy7();
+};
+
+function searchForPuppy7() {
+
+    $.get("/student/puppy1/" + newE7, function(data2h) {
+
+        var timestamp7 = "";
+
+        var d = new Date();
+
+        var year = d.getFullYear();
+
+        var month = (d.getMonth() + 1);
+        if (month < 10 ) { month = ("0" + month);}
+
+        var day = d.getDate();
+
+        if (day < 10 ) {day = ("0" + day);}
+        
+        var hour = d.getHours();
+        if (hour < 10 ) {hour = ("0" + hour);}
+        
+        var minute = d.getMinutes();
+        if (minute < 10 ) {minute = ("0" + minute);}
+            
+        var second = d.getSeconds();
+        if (second < 10 ) {second = ("0" + second);}
+
+        timestamp7 = (year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second);
+
+
+        var updateData7 = {
+            seventh_Mate: mate7.id,
+            seventh_Offspring: data2h.id,
+            seventh_Genotype: data2h.genoType,
+            seventh_HuskyImage: data2h.huskyImage,
+            seventh_createdAt: timestamp7
+        }
+
+        $("#seventhpuppy").html("<br>Your seventh puppy: <br><img src=assets/img/" + data2h.huskyImage + ">");
+
+        updateStudent7(updateData7);
+    })
+};
+
+function updateStudent7(updateData7) {
+
+    $.ajax({
+        method: "PUT",
+        url: "/student/update7",
+        data: updateData7
+    })
+}
 
 });
 
