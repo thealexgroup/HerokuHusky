@@ -32,6 +32,7 @@ $( "#familyTree7c" ).hide();
 $( "#familyTree8a" ).hide();
 $( "#familyTree8b" ).hide();
 $( "#familyTree8c" ).hide();
+$( "#familyTreeFinal" ).hide();
 
 //global variables aren't great, but at the time wasn't sure how else to write this.
 //a lot of things we would have done differently, but we had to get the app working 
@@ -454,9 +455,54 @@ function displaySeventhDivs(currentTime, totalTimeDiff6, totalTimeDiff7) {
         $("#holdsecond7c").html("<img src=assets/img/" + studentInfo.seventh_Mate + ".jpg>");       
     }
 
-//    getTimeDiff8(currentTime, totalTimeDiff7);
+    getTimeDiff8(currentTime, totalTimeDiff7);
 }
 
+
+function getTimeDiff8(currentTime, totalTimeDiff7) {
+
+    if (studentInfo.eighth_createdAt) {
+        old_date = studentInfo.eighth_createdAt.slice(0, 19).replace('T', ' ');
+    } else {
+
+        old_date = currentTime;
+    }
+
+    new_date = currentTime;
+
+    old_date_obj = new Date(Date.parse(old_date, "dd/mm/yyyy HH:mm:ss"));
+    new_date_obj = new Date(Date.parse(new_date, "dd/mm/yyyy HH:mm:ss"));
+
+    var utc1 = Date.UTC(new_date_obj.getFullYear(), new_date_obj.getMonth(), new_date_obj.getDate(), new_date_obj.getHours());
+    var utc2 = Date.UTC(old_date_obj.getFullYear(), old_date_obj.getMonth(), old_date_obj.getDate(), old_date_obj.getHours());
+
+    totalTimeDiff8 = (Math.floor((utc1 - utc2) / (1000 * 60 * 60) + 8));
+
+    displayEighthDivs(currentTime, totalTimeDiff7, totalTimeDiff8);
+}
+
+function displayEighthDivs(currentTime, totalTimeDiff7, totalTimeDiff8) {
+
+    if (!studentInfo.eighth_createdAt && totalTimeDiff7 > 1) { //TSA CHANGE THIS TO 17 FOR LIVE
+        $("#familyTree8a").show();
+        $("#holdfirst8a").html("<img src=assets/img/" + studentInfo.seventh_HuskyImage + ">");                      
+    }
+
+    if (studentInfo.eighth_createdAt && totalTimeDiff8 < 2) {//TSA CHANGE THIS TO 18 FOR LIVE
+        $("#familyTree8b").show();
+        $("#holdfirst8b").html("<img src=assets/img/" + studentInfo.seventh_HuskyImage + ">");          
+        $("#holdsecond8b").html("<img src=assets/img/" + studentInfo.eighth_Mate + ".jpg>");        
+    }
+
+    if (studentInfo.eighth_createdAt && totalTimeDiff8 > 1) {//TSA CHANGE THIS TO 17 FOR LIVE
+        $("#familyTree8c").show();
+        $("#holdfirst8c").html("<img src=assets/img/" + studentInfo.seventh_HuskyImage + ">");          
+        $("#holdsecond8c").html("<img src=assets/img/" + studentInfo.eighth_Mate + ".jpg>");        
+        $("#familyTreeFinal").show();        
+        $("#holdFinal").html("<img src=assets/img/" + studentInfo.eighth_HuskyImage + ">");        
+    }
+
+}
 
 //This section is for taking initial input from student.handlebars, looking up the genetic code
 //for both parent, selecting a genetic code for offspring, and writing the information to the student database
@@ -644,7 +690,6 @@ function pickAllele3() {
 	} else {
 		hold1 = e2;
 	}
-//	console.log("one " + hold1);
 
 	var choose2 = Math.random();
 	if (choose2 < 0.5) {
@@ -652,14 +697,14 @@ function pickAllele3() {
 	} else {
 		hold2 = e4;
 	}
-//	console.log("two " + hold2);	
+	
 	if ((hold1.charAt(0) === "S") && 
 		(hold2.charAt(0) === "L")) {
 		newE += (hold2 + hold1);
 	} else {
 		newE += (hold1 + hold2);		
 	}
-//	console.log("3" + newE);
+
 	pickAllele4();
 };
 
@@ -678,7 +723,7 @@ function pickAllele4() {
 	} else {
 		hold1 = e2;
 	}
-//	console.log("one " + hold1);
+
 
 	var choose2 = Math.random();
 	if (choose2 < 0.5) {
@@ -686,14 +731,14 @@ function pickAllele4() {
 	} else {
 		hold2 = e4;
 	}
-//	console.log("two " + hold2);	
+	
 	if ((hold1.charAt(0) === hold1.charAt(0).toLowerCase()) && 
 		(hold2.charAt(0) === hold2.charAt(0).toUpperCase())) {
 		newE += (hold2 + hold1);
 	} else {
 		newE += (hold1 + hold2);		
 	}
-//	console.log("4 " + newE);
+
 	pickAllele5();
 };
 
@@ -712,7 +757,7 @@ function pickAllele5() {
 	} else {
 		hold1 = e2;
 	}
-//	console.log("one " + hold1);
+
 
 	var choose2 = Math.random();
 	if (choose2 < 0.5) {
@@ -720,7 +765,7 @@ function pickAllele5() {
 	} else {
 		hold2 = e4;
 	}
-//	console.log("two " + hold2);	
+
 	if ((hold1.charAt(0) === "Y") && 
 		(hold2.charAt(0) === "X")) {
 		newE += (hold2 + hold1);
@@ -785,10 +830,10 @@ function updateStudent(updateData) {
 $("#submit2").on("click", function(event) {
 
 	    event.preventDefault();
+
 	    var first_Offspring = studentInfo.first_Offspring;
-//	    console.log(iniParent);
 	    var second_Mate =  $('input[name="second_Mate"]').val();
-//	    console.log(fMate);
+
 	    checkValues2(first_Offspring, second_Mate);
 });
 
@@ -2129,6 +2174,8 @@ function searchDog7a(sixth_Offspring, seventh_Mate) {
 
 function searchDog7b(sixth_Offspring, seventh_Mate, data7a) {
 
+    console.log("7 Mate " + seventh_Mate)
+
     $.get("/student/get/" + seventh_Mate, function(data7b) {
 
         $("#holdsecond7a").html("<img src=assets/img/" + data7b.huskyImage + ">");      
@@ -2369,6 +2416,295 @@ function updateStudent7(updateData7) {
         method: "PUT",
         url: "/student/update7",
         data: updateData7
+    })
+}
+
+// get eight parent and mate information
+$("#submit8").on("click", function(event) {
+    
+    event.preventDefault();
+    
+    var seventh_Offspring = studentInfo.seventh_Offspring; 
+    var eighth_Mate =  $('input[name="eighth_Mate"]').val();
+    console.log("First 8 " + eighth_Mate)
+
+    checkValues8(seventh_Offspring, eighth_Mate);
+});
+
+
+function checkValues8(seventh_Offspring, eighth_Mate) {
+    if ((seventh_Offspring > 81 && eighth_Mate > 81) || (seventh_Offspring < 82 && eighth_Mate < 82) || 
+        (!eighth_Mate) || (!seventh_Offspring) || (seventh_Offspring < 1)  || (seventh_Offspring > 162) ||
+        (eighth_Mate < 1)  || (eighth_Mate > 162)) {
+
+        $("#myModal").modal();
+    } else {
+
+        removeSubmit8(seventh_Offspring, eighth_Mate);
+    }
+};
+
+function removeSubmit8(seventh_Offspring, eighth_Mate) {
+
+    $("#submit8").css("display", "none");
+    $("#show8").css("display", "inline");
+
+    searchDog8a(seventh_Offspring, eighth_Mate);
+};
+
+
+function searchDog8a(seventh_Offspring, eighth_Mate) {
+
+    $.get("/student/get/" + seventh_Offspring, function(data8a) {
+        searchDog8b(seventh_Offspring, eighth_Mate, data8a)
+   })
+};
+
+function searchDog8b(seventh_Offspring, eighth_Mate, data8a) {
+    console.log("8 Mate " + eighth_Mate)
+
+    $.get("/student/get/" + eighth_Mate, function(data8b) {
+        console.log("Data 8 a " + data8a)
+        console.log("Data 8 b " + data8b)
+
+        $("#holdsecond8a").html("<img src=assets/img/" + data8b.huskyImage + ">");      
+
+        parent8 = data8a;
+        mate8 = data8b;
+        pickAllele1g();
+    })
+};
+
+//randomly choose between one or the other allele for eye color
+function pickAllele1g() {
+
+    var e1 = parent8.eyeColorOne;
+    var e2 = parent8.eyeColorTwo;
+    var e3 = mate8.eyeColorOne;
+    var e4 = mate8.eyeColorTwo;
+
+    var hold1 = "";
+    var hold2 = ""; 
+
+    var choose1 = Math.random();
+
+    if (choose1 < 0.5) {
+        hold1 = e1;
+    } else {
+        hold1 = e2;
+    }
+
+    var choose2 = Math.random();
+
+    if (choose2 < 0.5) {
+        hold2 = e3;
+    } else {
+        hold2 = e4;
+    }
+
+    if ((hold1.charAt(0) === hold1.charAt(0).toLowerCase()) && 
+        (hold2.charAt(0) === hold2.charAt(0).toUpperCase())) {
+
+        newE8 += (hold2 + hold1);
+    } else {
+
+        newE8 += (hold1 + hold2);       
+    }
+
+    pickAllele2g();
+};
+
+function pickAllele2g() {
+
+    var e1 = parent8.coatColorOne;
+    var e2 = parent8.coatColorTwo;
+    var e3 = mate8.coatColorOne;
+    var e4 = mate8.coatColorTwo;
+
+    var hold1 = "";
+    var hold2 = ""; 
+
+    var choose1 = Math.random();
+
+
+    if (choose1 < 0.5) {
+        hold1 = e1;
+    } else {
+        hold1 = e2;
+    }
+
+    var choose2 = Math.random();
+
+    if (choose2 < 0.5) {
+        hold2 = e3;
+    } else {
+        hold2 = e4;
+    }
+
+
+    if ((hold1.charAt(0) === "W") && (hold2.charAt(0) === "G")) {
+        newE8 += (hold2 + hold1);
+    } else {
+        newE8 += (hold1 + hold2);       
+    }
+
+    pickAllele3g();
+};
+
+function pickAllele3g() {
+
+    var e1 = parent8.tailLengthOne;
+    var e2 = parent8.tailLengthTwo;
+    var e3 = mate8.tailLengthOne;
+    var e4 = mate8.tailLengthTwo;
+
+    var hold1 = "";
+    var hold2 = ""; 
+
+    var choose1 = Math.random();
+
+    if (choose1 < 0.5) {
+        hold1 = e1;
+    } else {
+        hold1 = e2;
+    }
+
+    var choose2 = Math.random();
+
+    if (choose2 < 0.5) {
+        hold2 = e3;
+    } else {
+        hold2 = e4;
+    }
+
+    if ((hold1.charAt(0) === "S") && (hold2.charAt(0) === "L")) {
+        newE8 += (hold2 + hold1);
+    } else {
+        newE8 += (hold1 + hold2);       
+    }
+
+    pickAllele4g();
+};
+
+function pickAllele4g() {
+
+    var e1 = parent8.tongueOne;
+    var e2 = parent8.tongueTwo;
+    var e3 = mate8.tongueOne;
+    var e4 = mate8.tongueTwo;
+
+    var hold1 = "";
+    var hold2 = ""; 
+
+    var choose1 = Math.random();
+
+    if (choose1 < 0.5) {
+        hold1 = e1;
+    } else {
+        hold1 = e2;
+    }
+
+    var choose2 = Math.random();
+
+    if (choose2 < 0.5) {
+        hold2 = e3;
+    } else {
+        hold2 = e4;
+    }
+
+    if ((hold1.charAt(0) === hold1.charAt(0).toLowerCase()) && (hold2.charAt(0) === hold2.charAt(0).toUpperCase())) {
+        newE8 += (hold2 + hold1);
+    } else {
+        newE8 += (hold1 + hold2);       
+    }
+
+    pickAllele5g();
+};
+
+function pickAllele5g() {
+
+    var e1 = parent8.sexOne;
+    var e2 = parent8.sexTwo;
+    var e3 = mate8.sexOne;
+    var e4 = mate8.sexTwo;
+
+    var hold1 = "";
+    var hold2 = ""; 
+
+    var choose1 = Math.random();
+
+    if (choose1 < 0.5) {
+        hold1 = e1;
+    } else {
+        hold1 = e2;
+    }
+
+    var choose2 = Math.random();
+
+    if (choose2 < 0.5) {
+        hold2 = e3;
+    } else {
+        hold2 = e4;
+    }
+
+    if ((hold1.charAt(0) === "Y") && (hold2.charAt(0) === "X")) {
+        newE8 += (hold2 + hold1);
+    } else {
+        newE8 += (hold1 + hold2);       
+    }
+
+    searchForPuppy8();
+};
+
+function searchForPuppy8() {
+
+    $.get("/student/puppy1/" + newE8, function(data2i) {
+
+        var timestamp8 = "";
+
+        var d = new Date();
+
+        var year = d.getFullYear();
+
+        var month = (d.getMonth() + 1);
+        if (month < 10 ) { month = ("0" + month);}
+
+        var day = d.getDate();
+
+        if (day < 10 ) {day = ("0" + day);}
+        
+        var hour = d.getHours();
+        if (hour < 10 ) {hour = ("0" + hour);}
+        
+        var minute = d.getMinutes();
+        if (minute < 10 ) {minute = ("0" + minute);}
+            
+        var second = d.getSeconds();
+        if (second < 10 ) {second = ("0" + second);}
+
+        timestamp8 = (year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second);
+
+
+        var updateData8 = {
+            eighth_Mate: mate8.id,
+            eighth_Offspring: data2i.id,
+            eighth_Genotype: data2i.genoType,
+            eighth_HuskyImage: data2i.huskyImage,
+            eighth_createdAt: timestamp8
+        }
+
+        $("#eightpuppy").html("<br>Your eighth and final puppy: <br><img src=assets/img/" + data2i.huskyImage + ">");
+
+        updateStudent8(updateData8);
+    })
+};
+
+function updateStudent8(updateData8) {
+
+    $.ajax({
+        method: "PUT",
+        url: "/student/update8",
+        data: updateData8
     })
 }
 
