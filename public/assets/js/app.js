@@ -152,7 +152,7 @@ function getTimeDiff1(date1, currentTime) {
     var utc2 = Date.UTC(old_date_obj.getFullYear(), old_date_obj.getMonth(), old_date_obj.getDate(), old_date_obj.getHours());
 
     //write the current time and time from when the first puppy was created to this variable
-    totalTimeDiff1 = (Math.floor((utc1 - utc2) / (1000 * 60 * 60) + 8));
+    totalTimeDiff1 = (Math.floor((utc1 - utc2) / (1000 * 60 * 60)));
 
     //invoke displayFirstDivs, passing both currentTime and totalTimeDiff1 for calcs
     displayFirstDivs(currentTime, totalTimeDiff1);
@@ -172,7 +172,7 @@ function displayFirstDivs(currentTime, totalTimeDiff1) {
 
     //if there is a created at time, but it's less than 18 hours old, then show this div which only
     //shows the parent images and a YOU MUST WAIT message
-    if (studentInfo.first_createdAt && totalTimeDiff1 < 2) { //TSA CHANGE THIS TO 18 FOR LIVE
+    if (studentInfo.first_createdAt && totalTimeDiff1 < 18) { 
         $("#familyTree1b").show();
         $("#holdfirst1b").html("<img src=assets/img/" + studentInfo.initial_Parent + ".jpg>");			
         $("#holdsecond1b").html("<img src=assets/img/" + studentInfo.first_Mate + ".jpg>");		 
@@ -180,7 +180,7 @@ function displayFirstDivs(currentTime, totalTimeDiff1) {
 
     //if first puppy was create longer than 17 hours ago, show both parent images and the 
     //SEE YOUR PUPPY BELOW message.  The next div for input will be shown as well.
-    if (studentInfo.first_createdAt && totalTimeDiff1 > 1) { //TSA CHANGE THIS TO 17 FOR LIVE
+    if (studentInfo.first_createdAt && totalTimeDiff1 > 17) { 
         $("#familyTree1c").show();
         $("#holdfirst1c").html("<img src=assets/img/" + studentInfo.initial_Parent + ".jpg>");			
         $("#holdsecond1c").html("<img src=assets/img/" + studentInfo.first_Mate + ".jpg>");		
@@ -210,25 +210,25 @@ function getTimeDiff2(currentTime, totalTimeDiff1) {
     var utc1 = Date.UTC(new_date_obj.getFullYear(), new_date_obj.getMonth(), new_date_obj.getDate(), new_date_obj.getHours());
     var utc2 = Date.UTC(old_date_obj.getFullYear(), old_date_obj.getMonth(), old_date_obj.getDate(), old_date_obj.getHours());
 
-    totalTimeDiff2 = (Math.floor((utc1 - utc2) / (1000 * 60 * 60) + 8));
+    totalTimeDiff2 = (Math.floor((utc1 - utc2) / (1000 * 60 * 60)));
 
     displaySecondDivs(currentTime, totalTimeDiff1, totalTimeDiff2);
 }
 
 function displaySecondDivs(currentTime, totalTimeDiff1, totalTimeDiff2) {
 
-    if (!studentInfo.second_createdAt && totalTimeDiff1 > 1) { //TSA CHANGE THIS TO 17 FOR LIVE
+    if (!studentInfo.second_createdAt && totalTimeDiff1 > 17) {
         $("#familyTree2a").show();
         $("#holdfirst2a").html("<img src=assets/img/" + studentInfo.first_HuskyImage + ">");						
     }
 
-    if (studentInfo.second_createdAt && totalTimeDiff2 < 2) {//TSA CHANGE THIS TO 18 FOR LIVE
+    if (studentInfo.second_createdAt && totalTimeDiff2 < 18) {
         $("#familyTree2b").show();
         $("#holdfirst2b").html("<img src=assets/img/" + studentInfo.first_HuskyImage + ">");			
         $("#holdsecond2b").html("<img src=assets/img/" + studentInfo.second_Mate + ".jpg>");		
     }
 
-    if (studentInfo.second_createdAt && totalTimeDiff2 > 1) {//TSA CHANGE THIS TO 17 FOR LIVE
+    if (studentInfo.second_createdAt && totalTimeDiff2 > 17) {
         $("#familyTree2c").show();
         $("#holdfirst2c").html("<img src=assets/img/" + studentInfo.first_HuskyImage + ">");			
         $("#holdsecond2c").html("<img src=assets/img/" + studentInfo.second_Mate + ".jpg>");		
@@ -255,25 +255,25 @@ function getTimeDiff3(currentTime, totalTimeDiff2) {
     var utc1 = Date.UTC(new_date_obj.getFullYear(), new_date_obj.getMonth(), new_date_obj.getDate(), new_date_obj.getHours());
     var utc2 = Date.UTC(old_date_obj.getFullYear(), old_date_obj.getMonth(), old_date_obj.getDate(), old_date_obj.getHours());
 
-    totalTimeDiff3 = (Math.floor((utc1 - utc2) / (1000 * 60 * 60) + 8));
+    totalTimeDiff3 = (Math.floor((utc1 - utc2) / (1000 * 60 * 60)));
  
     displayThirdDivs(currentTime, totalTimeDiff2, totalTimeDiff3);
 }
 
 function displayThirdDivs(currentTime, totalTimeDiff2, totalTimeDiff3) {
 
-    if (!studentInfo.third_createdAt && totalTimeDiff2 > 1) { //TSA CHANGE THIS TO 17 FOR LIVE
+    if (!studentInfo.third_createdAt && totalTimeDiff2 > 17) { 
         $("#familyTree3a").show();
         $("#holdfirst3a").html("<img src=assets/img/" + studentInfo.second_HuskyImage + ">");						
     }
 
-    if (studentInfo.third_createdAt && totalTimeDiff3 < 2) {//TSA CHANGE THIS TO 18 FOR LIVE
+    if (studentInfo.third_createdAt && totalTimeDiff3 < 18) {
         $("#familyTree3b").show();
         $("#holdfirst3b").html("<img src=assets/img/" + studentInfo.second_HuskyImage + ">");			
         $("#holdsecond3b").html("<img src=assets/img/" + studentInfo.third_Mate + ".jpg>");		
     }
 
-    if (studentInfo.third_createdAt && totalTimeDiff3 > 1) {//TSA CHANGE THIS TO 17 FOR LIVE
+    if (studentInfo.third_createdAt && totalTimeDiff3 > 17) {
         $("#familyTree3c").show();
         $("#holdfirst3c").html("<img src=assets/img/" + studentInfo.second_HuskyImage + ">");			
         $("#holdsecond3c").html("<img src=assets/img/" + studentInfo.third_Mate + ".jpg>");		
@@ -299,25 +299,25 @@ function getTimeDiff4(currentTime, totalTimeDiff3) {
     var utc1 = Date.UTC(new_date_obj.getFullYear(), new_date_obj.getMonth(), new_date_obj.getDate(), new_date_obj.getHours());
     var utc2 = Date.UTC(old_date_obj.getFullYear(), old_date_obj.getMonth(), old_date_obj.getDate(), old_date_obj.getHours());
 
-    totalTimeDiff4 = (Math.floor((utc1 - utc2) / (1000 * 60 * 60) + 8));
+    totalTimeDiff4 = (Math.floor((utc1 - utc2) / (1000 * 60 * 60)));
 
     displayFourthDivs(currentTime, totalTimeDiff3, totalTimeDiff4);
 }
 
 function displayFourthDivs(currentTime, totalTimeDiff3, totalTimeDiff4) {
 
-    if (!studentInfo.fourth_createdAt && totalTimeDiff3 > 1) { //TSA CHANGE THIS TO 17 FOR LIVE
+    if (!studentInfo.fourth_createdAt && totalTimeDiff3 > 17) {
         $("#familyTree4a").show();
         $("#holdfirst4a").html("<img src=assets/img/" + studentInfo.third_HuskyImage + ">");						
     }
 
-    if (studentInfo.fourth_createdAt && totalTimeDiff4 < 2) {//TSA CHANGE THIS TO 18 FOR LIVE
+    if (studentInfo.fourth_createdAt && totalTimeDiff4 < 18) {
        $("#familyTree4b").show();
        $("#holdfirst4b").html("<img src=assets/img/" + studentInfo.third_HuskyImage + ">");			
        $("#holdsecond4b").html("<img src=assets/img/" + studentInfo.fourth_Mate + ".jpg>");		
     }
 
-    if (studentInfo.fourth_createdAt && totalTimeDiff4 > 1) {//TSA CHANGE THIS TO 17 FOR LIVE
+    if (studentInfo.fourth_createdAt && totalTimeDiff4 > 17) {
         $("#familyTree4c").show();
         $("#holdfirst4c").html("<img src=assets/img/" + studentInfo.third_HuskyImage + ">");			
         $("#holdsecond4c").html("<img src=assets/img/" + studentInfo.fourth_Mate + ".jpg>");		
@@ -343,25 +343,25 @@ function getTimeDiff5(currentTime, totalTimeDiff4) {
     var utc1 = Date.UTC(new_date_obj.getFullYear(), new_date_obj.getMonth(), new_date_obj.getDate(), new_date_obj.getHours());
     var utc2 = Date.UTC(old_date_obj.getFullYear(), old_date_obj.getMonth(), old_date_obj.getDate(), old_date_obj.getHours());
 
-    totalTimeDiff5 = (Math.floor((utc1 - utc2) / (1000 * 60 * 60) + 8));
+    totalTimeDiff5 = (Math.floor((utc1 - utc2) / (1000 * 60 * 60)));
 
     displayFifthDivs(currentTime, totalTimeDiff4, totalTimeDiff5);
 }
 
 function displayFifthDivs(currentTime, totalTimeDiff4, totalTimeDiff5) {
 
-    if (!studentInfo.fifth_createdAt && totalTimeDiff4 > 1) { //TSA CHANGE THIS TO 17 FOR LIVE
+    if (!studentInfo.fifth_createdAt && totalTimeDiff4 > 17) {
         $("#familyTree5a").show();
         $("#holdfirst5a").html("<img src=assets/img/" + studentInfo.fourth_HuskyImage + ">");						
     }
 
-    if (studentInfo.fifth_createdAt && totalTimeDiff5 < 2) {//TSA CHANGE THIS TO 18 FOR LIVE
+    if (studentInfo.fifth_createdAt && totalTimeDiff5 < 18) {
         $("#familyTree5b").show();
         $("#holdfirst5b").html("<img src=assets/img/" + studentInfo.fourth_HuskyImage + ">");			
         $("#holdsecond5b").html("<img src=assets/img/" + studentInfo.fifth_Mate + ".jpg>");		
     }
 
-    if (studentInfo.fifth_createdAt && totalTimeDiff5 > 1) {//TSA CHANGE THIS TO 17 FOR LIVE
+    if (studentInfo.fifth_createdAt && totalTimeDiff5 > 17) {
         $("#familyTree5c").show();
         $("#holdfirst5c").html("<img src=assets/img/" + studentInfo.fourth_HuskyImage + ">");			
         $("#holdsecond5c").html("<img src=assets/img/" + studentInfo.fifth_Mate + ".jpg>");		
@@ -394,18 +394,18 @@ function getTimeDiff6(currentTime, totalTimeDiff5) {
 
 function displaySixthDivs(currentTime, totalTimeDiff5, totalTimeDiff6) {
 
-    if (!studentInfo.sixth_createdAt && totalTimeDiff5 > 1) { //TSA CHANGE THIS TO 17 FOR LIVE
+    if (!studentInfo.sixth_createdAt && totalTimeDiff5 > 17) {
         $("#familyTree6a").show();
         $("#holdfirst6a").html("<img src=assets/img/" + studentInfo.fifth_HuskyImage + ">");						
     }
 
-    if (studentInfo.sixth_createdAt && totalTimeDiff6 < 2) {//TSA CHANGE THIS TO 18 FOR LIVE
+    if (studentInfo.sixth_createdAt && totalTimeDiff6 < 18) {
         $("#familyTree6b").show();
         $("#holdfirst6b").html("<img src=assets/img/" + studentInfo.fifth_HuskyImage + ">");			
         $("#holdsecond6b").html("<img src=assets/img/" + studentInfo.sixth_Mate + ".jpg>");		
     }
 
-    if (studentInfo.sixth_createdAt && totalTimeDiff6 > 1) {//TSA CHANGE THIS TO 17 FOR LIVE
+    if (studentInfo.sixth_createdAt && totalTimeDiff6 > 17) {
         $("#familyTree6c").show();
         $("#holdfirst6c").html("<img src=assets/img/" + studentInfo.fifth_HuskyImage + ">");			
         $("#holdsecond6c").html("<img src=assets/img/" + studentInfo.sixth_Mate + ".jpg>");		
@@ -431,25 +431,25 @@ function getTimeDiff7(currentTime, totalTimeDiff6) {
     var utc1 = Date.UTC(new_date_obj.getFullYear(), new_date_obj.getMonth(), new_date_obj.getDate(), new_date_obj.getHours());
     var utc2 = Date.UTC(old_date_obj.getFullYear(), old_date_obj.getMonth(), old_date_obj.getDate(), old_date_obj.getHours());
 
-    totalTimeDiff7 = (Math.floor((utc1 - utc2) / (1000 * 60 * 60) + 8));
+    totalTimeDiff7 = (Math.floor((utc1 - utc2) / (1000 * 60 * 60)));
 
     displaySeventhDivs(currentTime, totalTimeDiff6, totalTimeDiff7);
 }
 
 function displaySeventhDivs(currentTime, totalTimeDiff6, totalTimeDiff7) {
 
-    if (!studentInfo.seventh_createdAt && totalTimeDiff6 > 1) { //TSA CHANGE THIS TO 17 FOR LIVE
+    if (!studentInfo.seventh_createdAt && totalTimeDiff6 > 17) {
         $("#familyTree7a").show();
         $("#holdfirst7a").html("<img src=assets/img/" + studentInfo.sixth_HuskyImage + ">");                        
     }
 
-    if (studentInfo.seventh_createdAt && totalTimeDiff7 < 2) {//TSA CHANGE THIS TO 18 FOR LIVE
+    if (studentInfo.seventh_createdAt && totalTimeDiff7 < 18) {
         $("#familyTree7b").show();
         $("#holdfirst7b").html("<img src=assets/img/" + studentInfo.sixth_HuskyImage + ">");            
         $("#holdsecond7b").html("<img src=assets/img/" + studentInfo.seventh_Mate + ".jpg>");       
     }
 
-    if (studentInfo.seventh_createdAt && totalTimeDiff7 > 1) {//TSA CHANGE THIS TO 17 FOR LIVE
+    if (studentInfo.seventh_createdAt && totalTimeDiff7 > 17) {
         $("#familyTree7c").show();
         $("#holdfirst7c").html("<img src=assets/img/" + studentInfo.sixth_HuskyImage + ">");            
         $("#holdsecond7c").html("<img src=assets/img/" + studentInfo.seventh_Mate + ".jpg>");       
@@ -476,25 +476,25 @@ function getTimeDiff8(currentTime, totalTimeDiff7) {
     var utc1 = Date.UTC(new_date_obj.getFullYear(), new_date_obj.getMonth(), new_date_obj.getDate(), new_date_obj.getHours());
     var utc2 = Date.UTC(old_date_obj.getFullYear(), old_date_obj.getMonth(), old_date_obj.getDate(), old_date_obj.getHours());
 
-    totalTimeDiff8 = (Math.floor((utc1 - utc2) / (1000 * 60 * 60) + 8));
+    totalTimeDiff8 = (Math.floor((utc1 - utc2) / (1000 * 60 * 60)));
 
     displayEighthDivs(currentTime, totalTimeDiff7, totalTimeDiff8);
 }
 
 function displayEighthDivs(currentTime, totalTimeDiff7, totalTimeDiff8) {
 
-    if (!studentInfo.eighth_createdAt && totalTimeDiff7 > 1) { //TSA CHANGE THIS TO 17 FOR LIVE
+    if (!studentInfo.eighth_createdAt && totalTimeDiff7 > 17) {
         $("#familyTree8a").show();
         $("#holdfirst8a").html("<img src=assets/img/" + studentInfo.seventh_HuskyImage + ">");                      
     }
 
-    if (studentInfo.eighth_createdAt && totalTimeDiff8 < 2) {//TSA CHANGE THIS TO 18 FOR LIVE
+    if (studentInfo.eighth_createdAt && totalTimeDiff8 < 18) {
         $("#familyTree8b").show();
         $("#holdfirst8b").html("<img src=assets/img/" + studentInfo.seventh_HuskyImage + ">");          
         $("#holdsecond8b").html("<img src=assets/img/" + studentInfo.eighth_Mate + ".jpg>");        
     }
 
-    if (studentInfo.eighth_createdAt && totalTimeDiff8 > 1) {//TSA CHANGE THIS TO 17 FOR LIVE
+    if (studentInfo.eighth_createdAt && totalTimeDiff8 > 17) {
         $("#familyTree8c").show();
         $("#holdfirst8c").html("<img src=assets/img/" + studentInfo.seventh_HuskyImage + ">");          
         $("#holdsecond8c").html("<img src=assets/img/" + studentInfo.eighth_Mate + ".jpg>");        
