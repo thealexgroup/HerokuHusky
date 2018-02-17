@@ -20,6 +20,14 @@ var isLoggedIn = function (req, res, next) {
       return next();
   };
 
+
+var isAdminLoggedIn = function isAdmin(req, res, next) {
+    if (req.user.student_Email === "husky_admin@bvnw.edu")  {
+    next();
+    }
+  }
+
+
 // export routs
 // // =============================================================
 module.exports = function(app, passport) {
@@ -50,10 +58,9 @@ module.exports = function(app, passport) {
 
 
 //admin route to display all student information on admin page
-  app.get("/admin", function(req, res) {
+  app.get("/admin", isAdminLoggedIn, function(req, res) {
 
     db.students.findAll({
-
     }).then(function(result) {
       var hbsObject = { 
         Students: result
