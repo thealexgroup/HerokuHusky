@@ -10,10 +10,15 @@ var passport = require('passport');
 var bCrypt = require('bcrypt-nodejs');
 
 //We used this to get the student email they logged in with
-require('./auth.js');
+//require('./auth.js');
 
 //require models, or at least the index in models
 var db = require("../models");
+
+var isLoggedIn = function (req, res, next) {
+    if (req.isAuthenticated())
+      return next();
+  };
 
 // export routs
 // // =============================================================
@@ -101,10 +106,10 @@ module.exports = function(app, passport) {
 
 
 //student find route, get the information on a student based on email used to login
-app.get("/student/find/", function(req, res) {
+app.get("/student/find", isLoggedIn, function(req, res) {
     db.students.findOne({
       where:  {
-        student_Email: newEmail
+        student_Email: req.user.student_Email
       }
     }).then(function(results) {
       res.json(results);
@@ -115,7 +120,7 @@ app.get("/student/find/", function(req, res) {
 //these are the routes for updating each puppy
 
 //first route
-  app.put("/student/update", function(req, res) {
+  app.put("/student/update", isLoggedIn, function(req, res) {
 
 //take information from form submission, update the students table with information
 //for each column
@@ -129,7 +134,7 @@ app.get("/student/find/", function(req, res) {
       first_createdAt: req.body.first_createdAt
     }, {
       where: {
-        student_Email: newEmail
+        student_Email: req.user.student_Email
       }
     }).then(function(result) {
       res.render("login", result);
@@ -137,7 +142,7 @@ app.get("/student/find/", function(req, res) {
   });
 
 //second update route, same as above except update second submission
-  app.put("/student/update2", function(req, res) {
+  app.put("/student/update2", isLoggedIn, function(req, res) {
 
     db.students.update({
       second_Mate: req.body.second_Mate,
@@ -147,7 +152,7 @@ app.get("/student/find/", function(req, res) {
       second_createdAt: req.body.second_createdAt
     }, {
       where: {
-        student_Email: newEmail
+        student_Email: req.user.student_Email
       }
     }).then(function(result) {
       res.render("login", result);
@@ -155,7 +160,7 @@ app.get("/student/find/", function(req, res) {
   });
 
 //third update route
-  app.put("/student/update3", function(req, res) {
+  app.put("/student/update3", isLoggedIn, function(req, res) {
 
     db.students.update({
       third_Mate: req.body.third_Mate,
@@ -165,7 +170,7 @@ app.get("/student/find/", function(req, res) {
       third_createdAt: req.body.third_createdAt
     }, {
       where: {
-        student_Email: newEmail
+        student_Email: req.user.student_Email
       }
     }).then(function(result) {
       res.render("login", result);
@@ -173,7 +178,7 @@ app.get("/student/find/", function(req, res) {
   });
 
 //fourth update route
-app.put("/student/update4", function(req, res) {
+app.put("/student/update4", isLoggedIn, function(req, res) {
 
     db.students.update({
       fourth_Mate: req.body.fourth_Mate,
@@ -183,7 +188,7 @@ app.put("/student/update4", function(req, res) {
       fourth_createdAt: req.body.fourth_createdAt
     }, {
       where: {
-        student_Email: newEmail
+        student_Email: req.user.student_Email
       }
     }).then(function(result) {
       res.render("login", result);
@@ -191,7 +196,7 @@ app.put("/student/update4", function(req, res) {
   });
 
 //fifth update route
-app.put("/student/update5", function(req, res) {
+app.put("/student/update5", isLoggedIn, function(req, res) {
 
     db.students.update({
       fifth_Mate: req.body.fifth_Mate,
@@ -201,7 +206,7 @@ app.put("/student/update5", function(req, res) {
       fifth_createdAt: req.body.fifth_createdAt
     }, {
       where: {
-        student_Email: newEmail
+        student_Email: req.user.student_Email
       }
     }).then(function(result) {
       res.render("login", result);
@@ -209,7 +214,7 @@ app.put("/student/update5", function(req, res) {
   });
 
 //sixth update route
-app.put("/student/update6", function(req, res) {
+app.put("/student/update6", isLoggedIn, function(req, res) {
 
     db.students.update({
       sixth_Mate: req.body.sixth_Mate,
@@ -219,15 +224,15 @@ app.put("/student/update6", function(req, res) {
       sixth_createdAt: req.body.sixth_createdAt
     }, {
       where: {
-        student_Email: newEmail
+        student_Email: req.user.student_Email
       }
     }).then(function(result) {
-      res.render("login", result);
+      res.render("login", isLoggedIn, result);
     });
   });
 
 //seventh update route
-app.put("/student/update7", function(req, res) {
+app.put("/student/update7", isLoggedIn, function(req, res) {
 
     db.students.update({
       seventh_Mate: req.body.seventh_Mate,
@@ -237,7 +242,7 @@ app.put("/student/update7", function(req, res) {
       seventh_createdAt: req.body.seventh_createdAt
     }, {
       where: {
-        student_Email: newEmail
+        student_Email: req.user.student_Email
       }
     }).then(function(result) {
       res.render("login", result);
@@ -245,7 +250,7 @@ app.put("/student/update7", function(req, res) {
   });
 
 //eigth and final update route
-app.put("/student/update8", function(req, res) {
+app.put("/student/update8", isLoggedIn, function(req, res) {
 
   db.students.update({
       eighth_Mate: req.body.eighth_Mate,
@@ -255,7 +260,7 @@ app.put("/student/update8", function(req, res) {
       eighth_createdAt: req.body.eighth_createdAt
     }, {
       where: {
-        student_Email: newEmail
+        student_Email: req.user.student_Email
       }
     }).then(function(result) {
       res.render("login", result);
