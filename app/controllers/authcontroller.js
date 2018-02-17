@@ -21,7 +21,7 @@ exports.admin = function(req, res) {
 }
 
 exports.logout = function(req, res) {
-	req.session.destroy(function(err) {
+        req.session.destroy(function(err) {
 		res.redirect('/');
 	});
 }

@@ -1,5 +1,8 @@
 var express = require('express');
 var app = express();
+
+app.use(express.static('public'));
+
 var passport = require('passport');
 var session = require('express-session');
 var bodyParser = require('body-parser');
@@ -9,11 +12,15 @@ var cookieParser = require('cookie-parser');
 
 var authController = require('./app/controllers/authcontroller.js');
 
+//var NodeSession = require('node-session');
+
+//session = new NodeSession({secret: 'husky love'});
+
 //for BodyParser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); 
+//app.use(cookieParser)
 
-var routes = require("./app/routes/api-routes.js")(app);
 
 var PORT = process.env.PORT || 3000;
 
@@ -22,6 +29,9 @@ var PORT = process.env.PORT || 3000;
 
 //session secret
 app.use(session({ secret: 'husky love', resave: true, saveUninitialized: true}));
+//app.use(session({ secret: 'husky love', cookie: { maxAge: 60000 }}));
+
+
 
 app.use(passport.initialize());
 //persistent login sessions
@@ -45,18 +55,27 @@ app.get('/', function(req, res) {
 });
 
 
+/*
 
 app.get('/add', function(req, res) {
 	res.render('admin_add');
 })
 
+app.get('/find', function(req, res) {
+    res.render('student');
+})
 
-app.use(express.static('public'));
+//app.get('/student/find', function(req, res) {
+    //res.render('');
+//})
+
+*/
 
 var models = require("./app/models");
 
 //Routes
 var authRoute = require('./app/routes/auth.js')(app, passport);
+var routes = require("./app/routes/api-routes.js")(app);
 
 //load passport strategies 
 require('./app/config/passport/passport.js')(passport, models.students); 

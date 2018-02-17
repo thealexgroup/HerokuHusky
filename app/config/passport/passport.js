@@ -29,7 +29,7 @@ module.exports = function(passport, students) {
 			 		student_Email: email
 			 	}
 			 }).then(function(user) {
-				console.log(user);
+				//console.log(user);
 				if (!user) {
 
 					return done(null, false, {

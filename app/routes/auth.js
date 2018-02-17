@@ -9,6 +9,16 @@ module.exports = function(app, passport) {
 
 	app.get('/admin_delete', isLoggedIn, authController.admin_delete);	
 
+	app.get('/admin', isLoggedIn, authController.admin);	
+
+	app.get('/student', isLoggedIn, isAdmin, authController.student);
+
+	app.get('/student/add', isLoggedInAdd, authController.admin);	
+
+//	app.get('/student/find', isLoggedInFind, authController.admin);		
+
+	app.get('/logout', authController.logout);
+
 	app.post('/login', passport.authenticate('student-login', {
 			successRedirect: '/student', 
 
@@ -16,20 +26,18 @@ module.exports = function(app, passport) {
 		}
 	));	
 
-	app.get('/admin', isLoggedIn, authController.admin);	
-
-	app.get('/student', isLoggedIn, exportUser, isAdmin, authController.student);
-
-	app.get('/student/add', isLoggedInAdd, authController.admin);	
-
-	app.get('/logout', authController.logout);
 
 // Functions to use above
-
 	function isLoggedInAdd(req, res, next) {
 		if (req.isAuthenticated())
 			return next();
 		res.redirect('/student/add');
+	}
+
+	function isLoggedInFind(req, res, next) {
+		if (req.isAuthenticated())
+			return next();
+		res.redirect('/student/find');
 	}
 
 	function isLoggedIn(req, res, next) {
@@ -45,13 +53,15 @@ module.exports = function(app, passport) {
 		next();
 		}
 	}
-	
+
+/*	
 	function exportUser(req, res, next) {
 		if (req.isAuthenticated())
 		newEmail = req.user.student_Email;
 		exports.newEmail = newEmail;
 		next();
 	}
+*/
 
 }
 
