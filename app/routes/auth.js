@@ -9,7 +9,7 @@ module.exports = function(app, passport) {
 
 	app.get('/admin_delete', isLoggedIn, authController.admin_delete);	
 
-	app.get('/admin', isLoggedIn, authController.admin);	
+//	app.get('/admin', isLoggedIn, authController.admin);	
 
 	app.get('/student', isLoggedIn, isAdmin, authController.student);
 
